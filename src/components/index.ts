@@ -1,0 +1,20 @@
+// Export all components
+export { default as Logo } from './Logo';
+export { default as PhotoSlot } from './PhotoSlot';
+export { default as Header } from './Header';
+export { default as HeroSection } from './HeroSection';
+export { default as AboutSection } from './AboutSection';
+export { default as StatsSection } from './StatsSection';
+export { default as TreatmentsSection } from './TreatmentsSection';
+export { default as ClinicalCases } from './ClinicalCases';
+export { default as JourneySection } from './JourneySection';
+export { default as CTABox } from './CTABox';
+export { default as GoogleReviews } from './GoogleReviews';
+export { default as DoctorProfile } from './DoctorProfile';
+export { default as ClinicPhotos } from './ClinicPhotos';
+export { default as FAQSection } from './FAQSection';
+export { default as Footer } from './Footer';
+export { default as PopupForm } from './PopupForm';
+export { default as StickyCTA } from './StickyCTA';
+export { default as WhatsAppButton } from './WhatsAppButton';
+export { default as ThankYouPage } from './ThankYouPage';

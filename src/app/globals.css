@@ -1,0 +1,337 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Palette, radii, shadows and type all taken from pearldentalchennai.in so this
+ * landing page reads as the same brand: warm cream page, burnt-orange accent,
+ * dark-slate bands for the hero and footer.
+ */
+
+@layer base {
+  :root {
+    /* === Brand === */
+    --brand: #c45b00;
+    --brand-2: #f07820;
+    --amber: #ffaa33;
+    --brand-soft: #fff1e6;
+
+    /* === Surfaces === */
+    --page: #fffbf7;
+    --surface: #ffffff;
+    --dark: #1a100a;
+
+    /* === Type === */
+    --text: #1a100a;
+    --text-mute: #5c4a3a;
+    --text-dim: rgba(92, 74, 58, 0.62);
+
+    /* === Lines === */
+    --line: rgba(196, 91, 0, 0.14);
+    --line-soft: rgba(196, 91, 0, 0.07);
+
+    /* === Functional === */
+    --gold: #d9b65a; /* the logo artwork's gold — only used on dark bands */
+    --whatsapp: #25d366;
+
+    /* === Shadows — warm, tinted with the brand, never grey === */
+    --shadow-sm: 0 2px 8px rgba(196, 91, 0, 0.05);
+    --shadow-md: 0 10px 30px rgba(196, 91, 0, 0.07);
+    --shadow-lg: 0 20px 40px rgba(196, 91, 0, 0.12);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--font-jakarta), "Plus Jakarta Sans", system-ui, -apple-system,
+      "Segoe UI", Roboto, sans-serif;
+    line-height: 1.6;
+    color: var(--text);
+    background-color: var(--page);
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--brand);
+    color: #fff;
+  }
+}
+
+@layer components {
+  /* --- Layout ------------------------------------------------------- */
+
+  .shell {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+  }
+
+  .shell-narrow {
+    @apply mx-auto w-full max-w-3xl px-5 sm:px-8;
+  }
+
+  /* --- Section headings --------------------------------------------- */
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full px-5 py-2 font-display
+           text-[13px] font-semibold uppercase tracking-[0.05em];
+    background: var(--brand-soft);
+    color: var(--brand);
+    border: 1px solid var(--line);
+  }
+
+  .section-title {
+    @apply font-display text-[30px] font-extrabold leading-[1.15] sm:text-[40px] lg:text-[44px];
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+
+  .section-lede {
+    @apply mt-4 text-[15px] leading-relaxed sm:text-base;
+    color: var(--text-mute);
+  }
+
+  .rule-brand {
+    @apply mx-auto h-1 w-20 rounded-full;
+    background: linear-gradient(90deg, var(--brand-2), var(--brand));
+  }
+
+  /* --- Buttons ------------------------------------------------------ */
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5
+           font-display text-[15px] font-bold transition-all duration-300;
+  }
+
+  .btn-brand {
+    background: linear-gradient(135deg, var(--brand-2), var(--brand));
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(196, 91, 0, 0.25);
+  }
+
+  .btn-brand:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(196, 91, 0, 0.32);
+  }
+
+  .btn-outline {
+    background: var(--surface);
+    color: var(--brand);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn-outline:hover {
+    background: var(--brand-soft);
+    border-color: var(--brand);
+    transform: translateY(-2px);
+  }
+
+  /* --- Cards -------------------------------------------------------- */
+
+  .card {
+    @apply rounded-md p-7;
+    background: var(--surface);
+    border: 1px solid var(--line-soft);
+    box-shadow: var(--shadow-md);
+    transition: border-color 0.35s ease, box-shadow 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+      transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .card:hover {
+    border-color: var(--line);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+  }
+
+  .glass {
+    background: rgba(255, 251, 247, 0.88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line-soft);
+  }
+
+  .glass-card {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--line-soft);
+    box-shadow: 0 8px 32px 0 rgba(196, 91, 0, 0.08);
+  }
+
+  /* --- Pills / chips ------------------------------------------------ */
+
+  .chip {
+    @apply inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[13px] font-semibold;
+    background: var(--brand-soft);
+    color: var(--brand);
+    border: 1px solid var(--line);
+  }
+
+  /* --- Form fields -------------------------------------------------- */
+
+  .field {
+    @apply w-full rounded-sm px-4 py-3 text-[15px] outline-none transition;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    color: var(--text);
+  }
+
+  .field:focus {
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px rgba(196, 91, 0, 0.14);
+  }
+
+  .field::placeholder {
+    color: var(--text-dim);
+  }
+}
+
+@layer utilities {
+  /*
+   * Dark bands (hero, footer) re-point the same tokens, so .card, .chip,
+   * .section-title and friends adapt without a second set of classes.
+   */
+  .on-dark {
+    --surface: rgba(255, 255, 255, 0.05);
+    --text: #fff7ef;
+    --text-mute: rgba(255, 247, 239, 0.72);
+    --text-dim: rgba(255, 247, 239, 0.5);
+    --brand-soft: rgba(240, 120, 32, 0.14);
+    --line: rgba(217, 182, 90, 0.3);
+    --line-soft: rgba(255, 247, 239, 0.1);
+    background-color: var(--dark);
+    color: var(--text);
+  }
+
+  .on-dark .eyebrow,
+  .on-dark .chip,
+  .on-dark .btn-outline {
+    color: var(--amber);
+  }
+
+  .on-dark .btn-outline {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--line);
+    box-shadow: none;
+  }
+
+  .on-dark .btn-outline:hover {
+    background: var(--amber);
+    color: var(--dark);
+    border-color: var(--amber);
+  }
+
+  .on-dark .glass-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--line-soft);
+    box-shadow: none;
+  }
+
+  .text-gradient-brand {
+    background-image: linear-gradient(135deg, var(--dark) 30%, var(--brand));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+
+  .on-dark .text-gradient-brand {
+    background-image: linear-gradient(135deg, #ffe9c9 25%, var(--amber));
+  }
+
+  .text-brand {
+    color: var(--brand);
+  }
+
+  .on-dark .text-brand {
+    color: var(--amber);
+  }
+
+  .bg-brand-soft {
+    background-color: var(--brand-soft);
+  }
+
+  .surface-soft {
+    background-color: var(--brand-soft);
+  }
+
+  .border-line {
+    border-color: var(--line);
+  }
+
+  /* Hairline grid used behind the dark hero. */
+  .grid-lines {
+    background-image: linear-gradient(rgba(217, 182, 90, 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(217, 182, 90, 0.07) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Scroll reveal — page.tsx observer flips `.visible` on each <section>. */
+section {
+  @apply py-16 sm:py-24;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+section.visible {
+  opacity: 1;
+  transform: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--brand-soft);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #e0b78e;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brand);
+}
+
+@media (max-width: 767px) {
+  section {
+    contain: layout paint style;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  section {
+    opacity: 1;
+    transform: none;
+  }
+}

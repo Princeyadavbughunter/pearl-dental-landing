@@ -1,0 +1,20 @@
+{
+  "name": "Pearl Dental — Anna Nagar East, Chennai",
+  "short_name": "Pearl Dental",
+  "description": "Advanced Implant & Root Canal Centre led by Dr. S. Egammai. Dental implants from ₹20,000 in Anna Nagar East, Chennai.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFBF7",
+  "theme_color": "#C45B00",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/pearllogo.jpg",
+      "sizes": "1080x1080",
+      "type": "image/jpeg"
+    }
+  ],
+  "categories": ["health", "medical", "dental"],
+  "lang": "en",
+  "dir": "ltr"
+}
