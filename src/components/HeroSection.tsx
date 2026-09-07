@@ -31,12 +31,6 @@ export default function HeroSection({ onBookAppointment }: HeroSectionProps) {
 
   return (
     <section id="top" className="on-dark relative overflow-hidden">
-      {/* Real hero background from pearldentalchennai.in */}
-      <div
-        className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/hero.png')" }}
-      />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[var(--bg)]/80 via-[var(--bg)]/70 to-[var(--bg)]" />
       {/* Warm bloom behind the hero */}
       <div className="pointer-events-none absolute -top-40 right-0 h-96 w-96 rounded-full bg-[var(--brand-2)] opacity-[0.22] blur-[120px]" />
       <div className="pointer-events-none absolute inset-0 grid-lines opacity-40" />

@@ -11,13 +11,6 @@ export default function Header({ onBookAppointment }: HeaderProps) {
 
   return (
     <header className="relative z-50 border-b border-line">
-      {/* Offer ribbon — the single source of the offer copy is site.offer.banner */}
-      <div className="bg-gradient-to-r from-[var(--brand-2)] via-[var(--brand)] to-[var(--brand-2)] px-4 py-2 text-center">
-        <p className="font-display text-[12px] font-semibold uppercase tracking-[0.14em] text-white sm:text-[13px]">
-          ★ {site.offer.banner}
-        </p>
-      </div>
-
       <div className="glass">
         <div className="shell flex flex-col gap-4 py-4 md:flex-row md:items-center md:justify-between">
           <div className="flex flex-col items-center gap-4 md:flex-row md:gap-8">
