@@ -1,73 +1,48 @@
-import { Check, Users } from "lucide-react";
-import { site, whyChooseUs } from "@/config/site";
+import { whyChooseUs, site } from "@/config/site";
 
+/**
+ * Why Pearl Dental — asymmetric editorial.
+ *
+ * Heading sticks to the left while the reasons scroll past on the right. The
+ * reasons are a numbered list separated by hairlines, not a grid of cards.
+ */
 export default function AboutSection() {
   return (
-    <section id="why" className="bg-white">
-      <div className="shell">
-        <div className="mb-14 text-center">
+    <section id="why" className="band border-b border-line bg-white">
+      <div className="shell grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+        <div className="lg:sticky lg:top-[calc(var(--header-h)+3rem)] lg:self-start">
           <p className="eyebrow">Why Pearl Dental</p>
-          <h2 className="section-title mt-3">
-            An implant practice, <span className="text-gradient-brand">not a general clinic</span>{" "}
-            that also does implants
+          <h2 className="h2 mt-4">
+            An implant practice, not a general clinic that also does implants.
           </h2>
-          <div className="rule-brand mt-6" />
-          <p className="section-lede mx-auto max-w-3xl">
-            {site.doctor.bio}
+          <p className="muted mt-5 max-w-prose">
+            {site.name} is built around implantology and full mouth rehabilitation.
+            That focus is the reason the diagnosis, the surgery and the prosthetics
+            all happen in the same place.
           </p>
         </div>
 
-        <div className="mb-14 grid gap-6 md:grid-cols-2">
-          {whyChooseUs.map((item) => (
-            <div key={item.title} className="card">
-              <h3 className="font-display text-xl text-gradient-brand md:text-2xl">
-                {item.title}
-              </h3>
-              <p className="mt-3 text-[15px] leading-relaxed text-[var(--text-mute)]">
-                {item.body}
-              </p>
-            </div>
+        <ol className="border-t border-line">
+          {whyChooseUs.map((item, i) => (
+            <li
+              key={item.title}
+              className="grid grid-cols-[2.25rem_1fr] gap-x-4 border-b border-line py-7 sm:grid-cols-[3rem_1fr] sm:gap-x-6 sm:py-8"
+            >
+              <span
+                aria-hidden
+                className="tnum pt-1 font-display text-[15px] text-teal-500"
+              >
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <div>
+                <h3 className="text-[19px] font-medium leading-snug sm:text-[21px]">
+                  {item.title}
+                </h3>
+                <p className="muted mt-2.5 max-w-prose">{item.body}</p>
+              </div>
+            </li>
           ))}
-        </div>
-
-        <div className="grid gap-6 md:grid-cols-2">
-          <div className="card">
-            <h3 className="mb-5 font-display text-xl md:text-2xl">Key Specializations</h3>
-            <ul className="space-y-3">
-              {[
-                "Single, multiple & full-arch dental implants",
-                "Full mouth rehabilitation",
-                "Root canal treatment (in-house Endodontist)",
-                "Crowns, bridges & digital smile design",
-                "Laser gum therapy & air polishing",
-                "Implant treatment under conscious sedation",
-              ].map((item) => (
-                <li key={item} className="flex items-start gap-3 text-[15px] text-[var(--text-mute)]">
-                  <Check className="mt-1 h-4 w-4 shrink-0 text-brand" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="card">
-            <h3 className="mb-5 font-display text-xl md:text-2xl">Under One Roof</h3>
-            <ul className="space-y-3">
-              {[
-                "In-house OPG — full-mouth X-ray on the same visit",
-                "In-house Endodontist — root canals finished here",
-                "Intraoral scanner for digital impressions",
-                "Soft-tissue laser & conscious sedation on site",
-                `A team of 5, led by ${site.doctor.name}`,
-              ].map((item) => (
-                <li key={item} className="flex items-start gap-3 text-[15px] text-[var(--text-mute)]">
-                  <Users className="mt-1 h-4 w-4 shrink-0 text-brand" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        </ol>
       </div>
     </section>
   );

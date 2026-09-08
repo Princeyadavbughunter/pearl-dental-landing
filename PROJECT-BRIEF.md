@@ -10,9 +10,13 @@
 | **Experience** | 18 years |
 | **Staff strength** | 5 |
 
-**Address**
-101/1, F Block, 3rd Street, Anna Nagar East, Chennai – 600102
-*(Near Valliammal School, behind Hotel Bhalaji Bhavan)*
+**Address** *(corrected by the client, 09/09/2026)*
+F Block, 77, 3rd Cross St, Block F, Anna Nagar East, Chennai, Tamil Nadu 600102
+*(Landmark from onboarding — "Near Valliammal School, behind Hotel Bhalaji Bhavan" —
+still shown on the page, but was recorded against the older street number and is
+worth reconfirming.)*
+
+~~101/1, F Block, 3rd Street, Anna Nagar East, Chennai – 600102~~ — superseded.
 
 **Phone** 09600085760 · 9884389539 · 9840689539
 **Email** pearldentalchennai@gmail.com
@@ -41,8 +45,8 @@
 | GMB profile | Pearl Dental – Anna Nagar East, Chennai |
 | CRM sheet | To be created |
 | Website | www.pearldentalchennai.in |
-| Facebook | https://www.facebook.com/PearlDentalHospital/ |
-| Instagram | https://www.instagram.com/the_pearldental/ |
+| Facebook | https://www.facebook.com/pearldentalchennai/ *(corrected 09/09/2026 — the onboarding URL pointed at another practitioner's page)* |
+| Instagram | https://www.instagram.com/pearldentalchennai/ *(corrected 09/09/2026 — the onboarding handle was the wrong account)* |
 | YouTube | Pearl Dental Chennai |
 
 ## Current bottlenecks

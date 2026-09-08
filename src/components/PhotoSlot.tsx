@@ -48,17 +48,17 @@ export default function PhotoSlot({
     <div
       role="img"
       aria-label={alt}
-      className={`relative flex items-center justify-center overflow-hidden bg-[var(--brand-soft)] ${className}`}
+      className={`relative flex items-center justify-center overflow-hidden bg-teal-50 ${className}`}
     >
       <div
         aria-hidden
         className="absolute inset-0 opacity-[0.55]"
         style={{
           backgroundImage:
-            "repeating-linear-gradient(45deg, rgba(196,91,0,0.10) 0 12px, transparent 12px 24px)",
+            "repeating-linear-gradient(45deg, rgba(0,108,120,0.08) 0 12px, transparent 12px 24px)",
         }}
       />
-      <span className="relative px-6 text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--brand)]">
+      <span className="relative px-6 text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-teal-700">
         {label}
       </span>
     </div>

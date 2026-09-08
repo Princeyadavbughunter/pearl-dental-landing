@@ -1,83 +1,85 @@
-'use client';
-
-import Link from 'next/link';
-import { MessageCircle, Phone } from 'lucide-react';
-import Logo from './Logo';
-import { site } from '@/config/site';
+import Link from "next/link";
+import { ArrowLeft, Check, MessageCircle, Phone } from "lucide-react";
+import Logo from "./Logo";
+import { site } from "@/config/site";
+import { telHref, whatsappHref } from "@/lib/contact";
 
 const steps = [
-  'We review your request and call you back — usually within a couple of hours during clinic timings.',
-  'We confirm a slot that suits you, Monday to Saturday.',
-  'Your first visit includes the examination, the in-house OPG scan and a written estimate.',
+  "We call you back to confirm a time — usually within clinic hours the same day.",
+  "Your first visit covers the examination and the in-house OPG scan.",
+  "You leave with a written treatment plan and a written estimate.",
 ];
 
+/**
+ * Confirmation.
+ *
+ * WhatsApp is offered here as a button the visitor presses, rather than being
+ * opened programmatically at submit time — a scripted window.open after an
+ * awaited request is blocked by mobile browsers, which is how the previous
+ * flow lost its handoff.
+ */
 export default function ThankYouPage() {
   const phone = site.contact.phones[0];
-  const tel = `tel:+91${phone.replace(/^0/, '')}`;
 
   return (
-    <div className="min-h-screen bg-cream px-4 py-12 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-3xl overflow-hidden rounded-lg border border-line bg-white shadow-[var(--shadow-lg)]">
-        <div className="bg-gradient-to-r from-[var(--brand-2)] to-[var(--brand)] p-8 text-center text-white">
-          <h1 className="font-display text-2xl md:text-3xl">Thank you for choosing {site.name}</h1>
-          <p className="mt-2 text-[15px] font-medium text-white/85">
-            Your consultation request has been received.
+    <main className="min-h-dvh bg-paper-soft">
+      <div className="mx-auto w-full max-w-[42rem] px-5 py-12 sm:px-8 sm:py-20">
+        <Logo height={34} priority />
+
+        <div className="mt-10 border border-line bg-white p-6 sm:p-10">
+          <span className="grid h-11 w-11 place-items-center rounded-full bg-teal-50 text-teal-700">
+            <Check className="h-5 w-5" aria-hidden />
+          </span>
+
+          <h1 className="h2 mt-6">Your request has reached the clinic.</h1>
+          <p className="lede mt-4">
+            Thank you. {site.name}&apos;s team will call you back to confirm your
+            consultation with {site.doctor.name}.
           </p>
-        </div>
 
-        <div className="p-6 md:p-10">
-          <div className="flex flex-col items-center gap-6 text-center">
-            <Logo />
-            <div>
-              <h2 className="font-display text-xl md:text-2xl">{site.doctor.name}</h2>
-              <p className="mt-1 text-sm font-medium text-brand">{site.doctor.credential}</p>
-              <p className="mx-auto mt-4 max-w-lg text-[15px] text-[var(--text-mute)]">
-                Our team will call you shortly to confirm your appointment. If it is urgent,
-                reach us directly on the number below.
-              </p>
-            </div>
-          </div>
+          <ol className="mt-9 border-t border-line">
+            {steps.map((step, i) => (
+              <li
+                key={step}
+                className="grid grid-cols-[1.75rem_1fr] gap-4 border-b border-line py-4 text-[15px] text-ink-soft"
+              >
+                <span aria-hidden className="tnum font-display text-teal-500">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                {step}
+              </li>
+            ))}
+          </ol>
 
-          <div className="mt-10 border-t border-[var(--line-soft)] pt-8">
-            <h3 className="mb-6 text-center font-display text-lg">What happens next?</h3>
-            <div className="grid gap-4 md:grid-cols-3">
-              {steps.map((step, i) => (
-                <div
-                  key={step}
-                  className="rounded-md border border-[var(--line-soft)] bg-[var(--brand-soft)] p-5 text-center"
-                >
-                  <div className="mx-auto mb-3 grid h-9 w-9 place-items-center rounded-full bg-brand-soft font-display text-lg text-brand">
-                    {i + 1}
-                  </div>
-                  <p className="text-sm text-[var(--text-mute)]">{step}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="mt-9 flex flex-col justify-center gap-4 sm:flex-row">
-            <a href={tel} className="btn btn-brand">
-              <Phone className="h-5 w-5" /> Call {phone}
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <a href={telHref(phone)} className="btn btn-primary">
+              <Phone className="h-4 w-4" aria-hidden /> Call {phone}
             </a>
             <a
-              href={`https://wa.me/${site.contact.whatsapp}?text=${encodeURIComponent(
-                `Hi ${site.name}, I just submitted a consultation request.`,
-              )}`}
+              href={whatsappHref(
+                `Hello ${site.name}, I have just requested a consultation through your website.`,
+              )}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn bg-[var(--whatsapp)] text-white transition hover:-translate-y-0.5"
+              className="btn btn-outline"
             >
-              <MessageCircle className="h-5 w-5" /> WhatsApp Us
+              <MessageCircle className="h-4 w-4 text-whatsapp" aria-hidden />
+              Continue on WhatsApp
             </a>
           </div>
 
-          <p className="mt-8 text-center">
-            <Link href="/" className="text-sm text-[var(--text-dim)] underline-offset-4 hover:text-brand hover:underline">
-              ← Back to the home page
-            </Link>
+          <p className="mt-6 text-[14px] text-ink-mute">
+            {site.hours.summary}. {site.contact.addressLines.join(", ")}.
           </p>
         </div>
+
+        <Link
+          href="/"
+          className="mt-8 inline-flex items-center gap-2 text-[14px] text-ink-soft transition-colors hover:text-teal-700"
+        >
+          <ArrowLeft className="h-4 w-4" aria-hidden /> Back to the clinic page
+        </Link>
       </div>
-    </div>
+    </main>
   );
 }

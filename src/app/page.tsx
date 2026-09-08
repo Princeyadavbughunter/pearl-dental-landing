@@ -1,106 +1,59 @@
-'use client';
-
-import { useCallback, useEffect, useState } from "react";
-
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
-import StatsSection from "@/components/StatsSection";
+import ClinicBand from "@/components/ClinicBand";
+import DoctorProfile from "@/components/DoctorProfile";
+import TechnologySection from "@/components/TechnologySection";
+import ClinicGallery from "@/components/ClinicGallery";
 import TreatmentsSection from "@/components/TreatmentsSection";
 import ClinicalCases from "@/components/ClinicalCases";
 import JourneySection from "@/components/JourneySection";
-import CTABox from "@/components/CTABox";
-import GoogleReviews from "@/components/GoogleReviews";
-import DoctorProfile from "@/components/DoctorProfile";
-import ClinicPhotos from "@/components/ClinicPhotos";
+import ReviewsLink from "@/components/ReviewsLink";
 import FAQSection from "@/components/FAQSection";
+import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
-import PopupForm from "@/components/PopupForm";
 import StickyCTA from "@/components/StickyCTA";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import LeadProvider from "@/components/lead/LeadProvider";
 
-const OFFER_SECONDS = 20 * 60;
-
+/**
+ * The page is a server component. Only the pieces that genuinely need the
+ * browser are client islands — the header (scroll state), the lead dialog and
+ * its triggers, the case-photo reveal and the mobile action bar.
+ *
+ * The previous build marked the whole page 'use client' and held a 1-second
+ * countdown interval at the top of the tree, re-reconciling every section once
+ * a second for as long as the tab was open.
+ *
+ * There are no scroll-reveal animations. Sections render visible in the HTML,
+ * so nothing depends on JavaScript arriving in order to be readable.
+ *
+ * Section order follows how a patient evaluates a clinic: what it is, what it
+ * looks like, who treats you, what it can do, what it treats, proof, process,
+ * objections, then the ask.
+ */
 export default function Home() {
-  const [showStickyCta, setShowStickyCta] = useState(false);
-  const [showPopup, setShowPopup] = useState(false);
-  const [remaining, setRemaining] = useState(OFFER_SECONDS);
-
-  // Offer countdown — one interval, restarted when it runs out.
-  useEffect(() => {
-    const timer = setInterval(
-      () => setRemaining((s) => (s > 0 ? s - 1 : OFFER_SECONDS)),
-      1000,
-    );
-    return () => clearInterval(timer);
-  }, []);
-
-  // Sticky bar appears once the hero is scrolled past.
-  useEffect(() => {
-    const handleScroll = () => setShowStickyCta(window.scrollY > 300);
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Auto-open the lead popup once, shortly after landing.
-  useEffect(() => {
-    const timer = setTimeout(() => setShowPopup(true), 8000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Reveal each section as it scrolls into view (see `section.visible` in globals.css).
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { root: null, rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
-    );
-
-    document.querySelectorAll("section").forEach((section) => observer.observe(section));
-    return () => observer.disconnect();
-  }, []);
-
-  const openPopup = useCallback(() => {
-    setShowPopup(true);
-    document.body.style.overflow = "hidden";
-  }, []);
-
-  const closePopup = useCallback(() => {
-    setShowPopup(false);
-    document.body.style.overflow = "";
-  }, []);
-
   return (
-    <div className="relative min-h-screen bg-cream">
-      <Header onBookAppointment={openPopup} />
-      <HeroSection onBookAppointment={openPopup} />
-      <AboutSection />
-      <StatsSection />
-      <TreatmentsSection onBookAppointment={openPopup} />
-      <ClinicalCases onBookAppointment={openPopup} />
-      <JourneySection onBookAppointment={openPopup} />
-      <CTABox onBookAppointment={openPopup} />
-      <GoogleReviews />
-      <DoctorProfile onBookAppointment={openPopup} />
-      <ClinicPhotos onBookAppointment={openPopup} />
-      <FAQSection />
+    <LeadProvider>
+      <Header />
+      <main>
+        <HeroSection />
+        <AboutSection />
+        <ClinicBand />
+        <DoctorProfile />
+        <TechnologySection />
+        <ClinicGallery />
+        <TreatmentsSection />
+        <ClinicalCases />
+        <JourneySection />
+        <ReviewsLink />
+        <FAQSection />
+        <FinalCTA />
+      </main>
       <Footer />
 
-      <StickyCTA isVisible={showStickyCta} onBookAppointment={openPopup} />
+      <StickyCTA />
       <WhatsAppButton />
-      <PopupForm
-        isOpen={showPopup}
-        onClose={closePopup}
-        minutes={Math.floor(remaining / 60)}
-        seconds={remaining % 60}
-      />
-    </div>
+    </LeadProvider>
   );
 }

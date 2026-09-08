@@ -2,60 +2,50 @@ import Image from "next/image";
 import { site } from "@/config/site";
 
 /**
- * The clinic's logo is gold line-art on black — it needs a dark ground to read.
+ * The supplied brand artwork, unaltered.
  *
- *  • variant="lockup" — the shell mark on a dark-slate badge, next to the name
- *    set in Outfit. Used on the light header, where the raw artwork would wash
- *    out against the cream page. `/pearl-mark.png` is the mark extracted from
- *    the artwork with a real alpha channel, so the badge colour is ours.
- *  • variant="full"   — the whole lockup, wordmark and all. Only on the dark
- *    footer band, where the artwork's own black ground disappears into it.
+ * `logo-pearl-dental.png` and `logo-mark.png` are the client's logo.jpg with
+ * the white ground keyed to transparency and the surrounding margin trimmed to
+ * the ink bounds — the artwork itself is untouched, so the lockup sits on the
+ * page rather than reading as a pasted rectangle.
+ *
+ * Both files carry near-black type ("ADVANCED DENTAL CARE"), so the lockup is
+ * only ever placed on white or a light tint. Dark bands use the mark or plain
+ * type instead.
+ *
+ * Sized by a ratio-locked box rather than width/height props: the optimiser
+ * rounds a resized bitmap's height to whole pixels, which shifts the aspect
+ * ratio a fraction and makes next/image warn about a modified dimension.
  */
+
+const RATIO = { lockup: 3236 / 564, mark: 359 / 564 } as const;
+
 export default function Logo({
+  height = 34,
   variant = "lockup",
-  className = "",
   priority = false,
+  className = "",
 }: {
-  variant?: "lockup" | "full";
-  className?: string;
+  height?: number;
+  variant?: "lockup" | "mark";
   priority?: boolean;
+  className?: string;
 }) {
-  if (variant === "full") {
-    return (
-      <Image
-        src="/pearllogo.jpg"
-        alt={`${site.name} — ${site.tagline}`}
-        width={1080}
-        height={1080}
-        priority={priority}
-        sizes="220px"
-        className={`h-auto w-[190px] rounded-md ${className}`}
-      />
-    );
-  }
+  const ratio = RATIO[variant];
 
   return (
-    <div className={`flex items-center gap-3 ${className}`}>
-      <span className="grid h-12 w-12 shrink-0 place-items-center rounded-md bg-[var(--dark)] shadow-[var(--shadow-sm)]">
-        <Image
-          src="/pearl-mark.png"
-          alt=""
-          aria-hidden
-          width={706}
-          height={602}
-          priority={priority}
-          sizes="36px"
-          className="h-auto w-9"
-        />
-      </span>
-      <span className="text-left">
-        <span className="block font-display text-xl font-extrabold leading-tight tracking-tight text-gradient-brand sm:text-[26px]">
-          {site.name}
-        </span>
-        <span className="block font-display text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--text-dim)]">
-          Implant &amp; Root Canal Centre
-        </span>
-      </span>
-    </div>
+    <span
+      className={`relative block shrink-0 ${className}`}
+      style={{ height, width: height * ratio }}
+    >
+      <Image
+        src={variant === "mark" ? "/logo-mark.png" : "/logo-pearl-dental.png"}
+        alt={`${site.name} — ${site.strapline}`}
+        fill
+        priority={priority}
+        sizes={`${Math.ceil(height * ratio)}px`}
+        className="object-contain"
+      />
+    </span>
   );
 }

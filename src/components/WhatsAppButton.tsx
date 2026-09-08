@@ -1,21 +1,20 @@
-'use client';
+import { MessageCircle } from "lucide-react";
+import { whatsappHref, WHATSAPP_ENQUIRY } from "@/lib/contact";
 
-import { MessageCircle } from 'lucide-react';
-import { site } from '@/config/site';
-
+/**
+ * Desktop only. On phones WhatsApp lives in the action bar instead, so the two
+ * can never overlap.
+ */
 export default function WhatsAppButton() {
-  const message = `Hello ${site.name}, I would like to book an implant consultation.`;
-  const href = `https://wa.me/${site.contact.whatsapp}?text=${encodeURIComponent(message)}`;
-
   return (
     <a
-      href={href}
+      href={whatsappHref(WHATSAPP_ENQUIRY)}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Chat with Pearl Dental on WhatsApp"
-      className="fixed bottom-24 right-5 z-[60] grid h-14 w-14 place-items-center rounded-full bg-[var(--whatsapp)] text-white shadow-[0_10px_30px_-8px_rgba(37,211,102,0.7)] transition-transform duration-300 hover:scale-110 sm:bottom-24"
+      aria-label="Message Pearl Dental on WhatsApp"
+      className="fixed bottom-6 right-6 z-40 hidden h-12 w-12 place-items-center rounded-full bg-whatsapp text-white shadow-md transition-transform duration-200 hover:scale-105 md:grid"
     >
-      <MessageCircle className="h-6 w-6" />
+      <MessageCircle className="h-5 w-5" aria-hidden />
     </a>
   );
 }

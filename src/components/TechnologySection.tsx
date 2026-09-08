@@ -1,51 +1,52 @@
-import { Check } from "lucide-react";
-import { technology } from "@/config/site";
+import BookButton from "./lead/BookButton";
+import { capabilities } from "@/config/site";
 
+/**
+ * "Under one roof" — the section three of the five campaign angles point at.
+ *
+ * The previous build had this component written but never mounted, so
+ * #technology did not exist in the document and those ads landed at the top of
+ * the page. It is now the page's one dark band, in the petrol teal taken from
+ * the clinic's own reception panelling.
+ */
 export default function TechnologySection() {
   return (
-    <section id="technology" className="relative overflow-hidden surface-soft">
-      <div className="pointer-events-none absolute -bottom-32 left-0 h-96 w-96 rounded-full bg-[var(--brand-2)] opacity-[0.08] blur-[120px]" />
-
-      <div className="shell relative">
-        <div className="mb-14 text-center">
-          <p className="eyebrow">The Technology</p>
-          <h2 className="section-title mt-3">
-            Advanced <span className="text-gradient-brand">Implant Dentistry</span>
+    <section id="technology" className="band bg-teal-900 text-white">
+      <div className="shell">
+        <div className="max-w-[46rem]">
+          <p className="eyebrow !text-teal-300">Under one roof</p>
+          <h2 className="h2 mt-4 text-white">
+            Everything an implant case needs, in the building.
           </h2>
-          <div className="rule-brand mt-6" />
-          <p className="section-lede mx-auto max-w-3xl">
-            Everything an implant case needs — imaging, scanning, surgery, sedation and
-            healing review — happens inside the clinic. No referrals mid-treatment, no
-            running between diagnostic centres.
+          <p className="mt-5 max-w-prose text-[17px] leading-[1.65] text-white/70">
+            Imaging, scanning, surgery, sedation and specialist root canal treatment are
+            all in-house. That is what makes same-visit diagnosis possible, and it is why
+            nothing has to be referred out mid-treatment.
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-          {technology.map((item) => (
-            <div key={item.title} className="card group flex flex-col">
-              <div className="mb-6 grid h-32 place-items-center rounded-[16px] border border-line bg-brand-soft">
-                <span className="font-display text-4xl text-gradient-brand">
-                  {item.title
-                    .split(" ")
-                    .map((w) => w[0])
-                    .join("")
-                    .slice(0, 3)}
-                </span>
-              </div>
-              <h3 className="mb-3 text-center font-display text-xl">{item.title}</h3>
-              <p className="mb-6 min-h-[96px] text-center text-sm leading-relaxed text-[var(--text-mute)]">
+        <ul className="mt-14 grid gap-px border-t border-white/15 sm:grid-cols-2 lg:grid-cols-3">
+          {capabilities.map((item) => (
+            <li
+              key={item.title}
+              className="border-b border-white/15 py-7 sm:pr-8 lg:py-9"
+            >
+              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-teal-300">
+                {item.meta}
+              </p>
+              <h3 className="mt-3 text-[20px] font-medium text-white">{item.title}</h3>
+              <p className="mt-2.5 text-[15px] leading-[1.7] text-white/65">
                 {item.body}
               </p>
-              <ul className="mt-auto space-y-3">
-                {item.points.map((point) => (
-                  <li key={point} className="flex items-start gap-3 text-sm text-[var(--text-mute)]">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
-                    <span className="font-light">{point}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            </li>
           ))}
+        </ul>
+
+        <div className="mt-12 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+          <BookButton className="btn btn-white">Book a consultation</BookButton>
+          <p className="text-[14px] text-white/60">
+            Your first visit includes the OPG scan and a written estimate.
+          </p>
         </div>
       </div>
     </section>

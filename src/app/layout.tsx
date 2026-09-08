@@ -1,81 +1,112 @@
-import type { Metadata } from "next";
-import { Outfit, Plus_Jakarta_Sans } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Inter, Newsreader } from "next/font/google";
 import "./globals.css";
 import { site } from "@/config/site";
 
-// The same pairing pearldentalchennai.in uses: Outfit for headings, Plus
-// Jakarta Sans for body copy.
-const outfit = Outfit({
+/**
+ * Newsreader for headings gives the page an editorial, medical-publication
+ * register rather than a marketing one; Inter carries everything functional.
+ */
+const newsreader = Newsreader({
   subsets: ["latin"],
-  variable: "--font-outfit",
+  variable: "--font-newsreader",
+  display: "swap",
+  weight: ["400", "500"],
+  style: ["normal", "italic"],
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
   display: "swap",
 });
 
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  variable: "--font-jakarta",
-  display: "swap",
-});
+/**
+ * This is a campaign landing page. It defaults to noindex so it can never
+ * compete with the clinic's own site in search; set NEXT_PUBLIC_INDEXABLE=true
+ * (and NEXT_PUBLIC_SITE_URL to the domain it is actually served from) if the
+ * client decides it should be indexed. See .env.example.
+ */
+const deployedUrl = process.env.NEXT_PUBLIC_SITE_URL || site.website;
+const indexable = process.env.NEXT_PUBLIC_INDEXABLE === "true";
 
-const title = `${site.name} | Dental Implants from ₹20,000 — Anna Nagar East, Chennai`;
-const description = `${site.doctor.name} — ${site.doctor.credential}, ${site.doctor.experience} of implant-focused practice. In-house OPG, intraoral scanning, conscious sedation and an in-house Endodontist, all under one roof in Anna Nagar East, Chennai. Implants from ₹20,000.`;
+const title = `${site.name} — ${site.strapline} | Anna Nagar East, Chennai`;
+const description = `Implants, root canals and full mouth rehabilitation with ${site.doctor.name}, ${site.doctor.credential}. In-house OPG, intraoral scanning, conscious sedation and a resident Endodontist — all at one clinic in Anna Nagar East, Chennai.`;
 
 export const metadata: Metadata = {
+  metadataBase: new URL(deployedUrl),
   title,
   description,
-  keywords:
-    "dental implants Chennai, dentist Anna Nagar East, Pearl Dental, Dr. S. Egammai, implantologist Chennai, root canal Anna Nagar, full mouth rehabilitation Chennai, conscious sedation dentistry",
+  applicationName: site.name,
   authors: [{ name: site.doctor.name }],
   creator: site.name,
   publisher: site.name,
   formatDetection: { email: false, address: false, telephone: false },
-  metadataBase: new URL(site.website),
   alternates: { canonical: "/" },
   openGraph: {
     title,
     description,
-    url: site.website,
+    url: "/",
     siteName: site.name,
     locale: "en_IN",
     type: "website",
+    images: [
+      {
+        url: "/og.jpg",
+        width: 1200,
+        height: 630,
+        alt: `${site.name} — ${site.strapline}, Anna Nagar East, Chennai`,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${site.name} — ${site.tagline}`,
+    title,
     description,
+    images: ["/og.jpg"],
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
+  robots: indexable
+    ? {
+        index: true,
+        follow: true,
+        googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
+      }
+    : { index: false, follow: false, nocache: true },
 };
 
-/** LocalBusiness schema so the clinic's details show up correctly in search. */
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#006C78",
+};
+
+/** LocalBusiness schema so the clinic's details resolve correctly in search. */
 const schema = {
   "@context": "https://schema.org",
   "@type": "Dentist",
   name: site.name,
   description: site.tagline,
-  url: site.website,
+  url: deployedUrl,
+  image: `${deployedUrl.replace(/\/$/, "")}/og.jpg`,
+  logo: `${deployedUrl.replace(/\/$/, "")}/logo-pearl-dental.png`,
   telephone: site.contact.phones.map((p) => `+91${p.replace(/^0/, "")}`),
   email: site.contact.email,
   address: {
     "@type": "PostalAddress",
-    streetAddress: site.contact.addressLines[0],
-    addressLocality: "Anna Nagar East, Chennai",
-    postalCode: "600102",
-    addressRegion: "Tamil Nadu",
-    addressCountry: "IN",
+    streetAddress: site.contact.address.street,
+    addressLocality: site.contact.address.locality,
+    postalCode: site.contact.address.postalCode,
+    addressRegion: site.contact.address.region,
+    addressCountry: site.contact.address.country,
   },
   openingHours: site.hours.schema,
   priceRange: "₹₹",
+  medicalSpecialty: "Dentistry",
+  founder: {
+    "@type": "Person",
+    name: site.doctor.name,
+    jobTitle: site.doctor.role,
+  },
   sameAs: [site.social.facebook, site.social.instagram, site.social.youtube],
 };
 
@@ -83,18 +114,25 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    /*
+      suppressHydrationWarning applies to this element's own attributes only —
+      one level deep, so genuine mismatches anywhere below still surface.
+      Translate and locale extensions (and Chrome's own translate) rewrite
+      `lang` on <html> before React hydrates, which otherwise throws a hydration
+      error on a page that is in fact identical on server and client.
+    */
+    <html
+      lang="en-IN"
+      suppressHydrationWarning
+      className={`${inter.variable} ${newsreader.variable}`}
+    >
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#C45B00" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
       </head>
-      <body className={`${outfit.variable} ${jakarta.variable} font-sans antialiased`}>
-        {children}
-      </body>
+      <body className="font-sans antialiased">{children}</body>
     </html>
   );
 }

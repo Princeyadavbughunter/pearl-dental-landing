@@ -1,61 +1,99 @@
-import { Check } from "lucide-react";
-import PhotoSlot from "./PhotoSlot";
+import Image from "next/image";
+import BookButton from "./lead/BookButton";
 import { site } from "@/config/site";
 
-interface DoctorProfileProps {
-  onBookAppointment: () => void;
-}
-
-export default function DoctorProfile({ onBookAppointment }: DoctorProfileProps) {
+/**
+ * About the founder — editorial, two-column.
+ *
+ * Every line of copy is the client's approved text (see `site.doctor`). Nothing
+ * is inferred: no patient or implant counts, no hospital affiliation, and the
+ * photograph captions describe only what is visible in the frame.
+ *
+ * The section carries the two award photographs and no portrait — the desk
+ * portrait leads the hero and is not repeated here.
+ */
+export default function DoctorProfile() {
   const { doctor } = site;
 
   return (
-    <section id="doctor" className="relative overflow-hidden">
-      <div className="pointer-events-none absolute right-0 top-1/3 h-96 w-96 rounded-full bg-[var(--brand)] opacity-[0.05] blur-[130px]" />
+    <section id="doctor" className="band border-b border-line bg-paper-soft">
+      <div className="shell grid gap-12 lg:grid-cols-[1.1fr_0.75fr] lg:items-start lg:gap-16">
+        <div>
+          <header>
+            <p className="eyebrow">About the founder</p>
+            <h2 className="h2 mt-4">{doctor.name}</h2>
+            <p className="mt-4 text-[16px] font-medium text-ink">{doctor.role}</p>
+            <p className="mt-1 text-[15px] text-teal-700">{doctor.credential}</p>
+          </header>
 
-      <div className="shell relative">
-        <div className="mb-14 text-center">
-          <p className="eyebrow">Meet Your Dentist</p>
-          <h2 className="section-title mt-3">
-            <span className="text-gradient-brand">{doctor.name}</span>
-          </h2>
-          <div className="rule-brand mt-6" />
-          <p className="section-lede mx-auto max-w-2xl">
-            {doctor.credential} · {doctor.experience} of practice
-          </p>
+          <div className="mt-8 space-y-4">
+            {doctor.bio.map((para, i) => (
+              <p
+                key={para.slice(0, 24)}
+                className={
+                  i === 0
+                    ? "text-[17px] leading-[1.65] text-ink-soft sm:text-[18px]"
+                    : "muted"
+                }
+              >
+                {para}
+              </p>
+            ))}
+          </div>
+
+          <h3 className="mt-10 text-[13px] font-semibold uppercase tracking-[0.12em] text-ink-mute">
+            Clinical expertise
+          </h3>
+          <dl className="mt-5 border-t border-line">
+            {doctor.expertise.map((item) => (
+              <div
+                key={item.title}
+                className="grid gap-1 border-b border-line py-4 sm:grid-cols-[minmax(0,15rem)_1fr] sm:gap-6 sm:py-5"
+              >
+                <dt className="text-[16px] font-medium leading-snug">{item.title}</dt>
+                <dd className="muted !text-[14px]">{item.body}</dd>
+              </div>
+            ))}
+          </dl>
+
+          {/* Credibility line — small and scannable, never oversized figures. */}
+          <ul className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-2 text-[13px] font-medium uppercase tracking-[0.1em] text-ink-soft">
+            {doctor.credibility.map((item, i) => (
+              <li key={item} className="flex items-center gap-3">
+                {i > 0 && <span aria-hidden className="h-1 w-1 rounded-full bg-teal-500" />}
+                {item}
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-9">
+            <BookButton className="btn btn-primary">
+              Book a Consultation with {doctor.shortName}
+            </BookButton>
+          </div>
         </div>
 
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-center">
-          <div className="relative">
-            <PhotoSlot
-              src="/doctor.jpg"
-              position="50% 15%"
-              label="Dr. S. Egammai — portrait"
-              alt={`${doctor.name}, ${doctor.credential}`}
-              className="aspect-[4/5] rounded-lg border border-line shadow-[var(--shadow-lg)]"
-              sizes="(min-width: 1024px) 40vw, 100vw"
-            />
-            <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-[var(--brand-2)] to-[var(--brand)] px-6 py-2 font-display text-[13px] font-bold text-white shadow-lg">
-              {doctor.experience} Experience
-            </div>
-          </div>
-
-          <div>
-            <p className="text-[16px] leading-relaxed text-[var(--text-mute)]">{doctor.bio}</p>
-
-            <ul className="mt-8 grid gap-3">
-              {doctor.highlights.map((item) => (
-                <li key={item} className="flex items-start gap-3 text-[15px] text-[var(--text-mute)]">
-                  <Check className="mt-1 h-4 w-4 shrink-0 text-brand" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-
-            <button onClick={onBookAppointment} className="btn btn-brand mt-9 w-full sm:w-auto">
-              Schedule Your Consultation
-            </button>
-          </div>
+        {/* Full column width, stacked, so two photographs still hold the column
+            rather than reading as leftover thumbnails. */}
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-1">
+          {doctor.photos.map((shot) => (
+            <figure key={shot.src}>
+              <div className="figure aspect-[4/3] w-full rounded-sm border border-line">
+                <Image
+                  src={shot.src}
+                  alt={shot.alt}
+                  fill
+                  loading="lazy"
+                  sizes="(min-width: 1024px) 32vw, (min-width: 640px) 45vw, 100vw"
+                  className="object-cover"
+                  style={{ objectPosition: shot.position }}
+                />
+              </div>
+              <figcaption className="mt-2.5 text-[13px] leading-snug text-ink-mute">
+                {shot.caption}
+              </figcaption>
+            </figure>
+          ))}
         </div>
       </div>
     </section>

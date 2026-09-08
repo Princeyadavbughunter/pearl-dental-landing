@@ -1,170 +1,102 @@
-import {
-  Award,
-  Moon,
-  Phone,
-  ScanLine,
-  ShieldCheck,
-  Sparkles,
-  Star,
-  Zap,
-  type LucideIcon,
-} from "lucide-react";
-import PhotoSlot from "./PhotoSlot";
-import { site, heroUsps, commitments, trustStrip } from "@/config/site";
+import Image from "next/image";
+import { Phone } from "lucide-react";
+import BookButton from "./lead/BookButton";
+import { site, credentials } from "@/config/site";
+import { telHref } from "@/lib/contact";
 
-interface HeroSectionProps {
-  onBookAppointment: () => void;
-}
-
-const icons: Record<string, LucideIcon> = {
-  Award,
-  ScanLine,
-  Sparkles,
-  Moon,
-  Zap,
-  ShieldCheck,
-};
-
-export default function HeroSection({ onBookAppointment }: HeroSectionProps) {
+/**
+ * Hero.
+ *
+ * One idea, stated plainly, next to a real photograph of the dentist in her own
+ * consulting room. No pricing headline, no offer card, no countdown — the first
+ * impression is meant to be "this is a real practice", not "this is an advert".
+ */
+export default function HeroSection() {
   const phone = site.contact.phones[0];
-  const tel = `tel:+91${phone.replace(/^0/, "")}`;
 
   return (
-    <section id="top" className="on-dark relative overflow-hidden">
-      {/* Warm bloom behind the hero */}
-      <div className="pointer-events-none absolute -top-40 right-0 h-96 w-96 rounded-full bg-[var(--brand-2)] opacity-[0.22] blur-[120px]" />
-      <div className="pointer-events-none absolute inset-0 grid-lines opacity-40" />
+    <section id="top" className="border-b border-line bg-white">
+      <div className="shell grid items-center gap-10 pb-0 pt-12 sm:pt-16 lg:grid-cols-[1.06fr_0.94fr] lg:gap-16 lg:pb-20 lg:pt-20">
+        <div className="max-w-[36rem]">
+          <p className="eyebrow flex items-start gap-2">
+            <span
+              aria-hidden
+              className="mt-[0.42em] inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-teal-500"
+            />
+            <span>{site.strapline} · Anna Nagar East, Chennai</span>
+          </p>
 
-      <div className="shell relative">
-        <div className="mx-auto mb-10 max-w-3xl text-center">
-          <span className="chip mb-6">
-            <Star className="h-3.5 w-3.5" /> {site.tagline}
-          </span>
-          <h1 className="font-display text-[34px] leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
-            Transform Your Smile With
-            <br />
-            <span className="text-gradient-brand">{site.name}</span>
+          <h1 className="display mt-5">
+            Implant dentistry that starts and finishes in{" "}
+            <em className="not-italic text-teal-700">one clinic</em>.
           </h1>
-          <p className="section-lede mx-auto max-w-2xl">
+
+          <p className="lede mt-6">
             {site.doctor.name} — {site.doctor.credential}. {site.doctor.experience} of
-            implant-focused practice in Anna Nagar East, with diagnosis, surgery and
-            follow-up all under one roof.
+            implant-focused practice in Anna Nagar East, with imaging, surgery, root
+            canals and follow-up all in the building.
+          </p>
+
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <BookButton className="btn btn-primary sm:px-8">
+              Book a consultation
+            </BookButton>
+            <a href={telHref(phone)} className="btn btn-outline sm:px-8">
+              <Phone className="h-4 w-4 text-teal-700" aria-hidden />
+              {phone}
+            </a>
+          </div>
+
+          <p className="mt-5 text-[14px] leading-relaxed text-ink-mute">
+            {site.consultation.includes}.
+            <span className="mt-1 block">
+              Implants from{" "}
+              <span className="font-medium text-ink">{site.pricing.implantFrom}</span>{" "}
+              {site.pricing.note}.
+            </span>
           </p>
         </div>
 
-        <div className="mb-16 grid gap-8 md:grid-cols-2 md:items-stretch">
-          <PhotoSlot
-            src="/doctor.jpg"
-            position="50% 15%"
-            label="Dr. Egammai Manikandan — Pearl Dental"
-            alt={`${site.doctor.name} at Pearl Dental, Anna Nagar East, Chennai`}
-            priority
-            sizes="(min-width: 768px) 50vw, 100vw"
-            className="h-64 rounded-lg border border-line md:h-[450px]"
-          />
-
-          {/* Offer card */}
-          <div className="group relative">
-            <div className="absolute -inset-px rounded-[22px] bg-gradient-to-br from-[var(--brand-2)] via-transparent to-[var(--brand)] opacity-30 blur-[2px] transition duration-700 group-hover:opacity-60" />
-            <div className="relative flex h-full flex-col justify-center rounded-[22px] border border-line bg-[var(--surface)] p-8 text-center shadow-[var(--shadow-md)]">
-              <h2 className="font-display text-2xl tracking-tight md:text-3xl">
-                Implant Pricing
-              </h2>
-              <div className="rule-brand my-5" />
-              <p className="font-display text-4xl text-gradient-brand md:text-5xl">
-                {site.offer.headline.replace("Dental Implants from ", "")}
-              </p>
-              <p className="mt-2 text-lg font-light text-[var(--text-mute)]">per implant</p>
-              <p className="mt-5 border-t border-[var(--line-soft)] pt-5 text-sm text-[var(--text-mute)]">
-                Final cost depends on the implant system, the crown and whether a graft is
-                needed — you get a written estimate before anything begins.
-              </p>
-
-              <button onClick={onBookAppointment} className="btn btn-brand mt-7 w-full flex-col !gap-0.5 !py-4">
-                <span className="text-lg">Book Consultation</span>
-                <span className="text-[11px] font-medium opacity-80">
-                  {site.offer.sub}
-                </span>
-              </button>
-            </div>
+        {/* Full-bleed on phones so the photograph, not a card, carries the screen. */}
+        <figure className="-mx-5 mt-2 sm:-mx-8 lg:mx-0 lg:mt-0">
+          <div className="figure relative aspect-[4/3] w-full lg:aspect-[4/5] lg:rounded-sm">
+            <Image
+              src="/doc.webp"
+              alt={`${site.doctor.name} at Pearl Dental, Anna Nagar East, Chennai`}
+              fill
+              priority
+              fetchPriority="high"
+              sizes="(min-width: 1024px) 44vw, 100vw"
+              className="object-cover"
+              style={{ objectPosition: "47% 28%" }}
+            />
           </div>
-        </div>
+          <figcaption className="px-5 pt-3 text-[13px] text-ink-mute sm:px-8 lg:px-0">
+            {site.doctor.name} at the Anna Nagar East clinic.
+          </figcaption>
+        </figure>
+      </div>
 
-        <div className="mb-16 flex flex-col justify-center gap-4 md:flex-row">
-          <button onClick={onBookAppointment} className="btn btn-brand text-lg md:min-w-[240px]">
-            Book Consultation
-          </button>
-          <a href={tel} className="btn btn-outline text-lg md:min-w-[240px]">
-            <Phone className="h-5 w-5" /> {phone}
-          </a>
-        </div>
-
-        {/* Trust marquee */}
-        <div className="mb-16 overflow-hidden border-y border-line py-4">
-          <div className="flex w-max animate-marquee gap-10">
-            {[...trustStrip, ...trustStrip].map((item, i) => (
-              <span
-                key={i}
-                className="flex shrink-0 items-center gap-3 text-[13px] uppercase tracking-[0.18em] text-[var(--text-mute)]"
+      {/* Credibility row — only facts with a source behind them. */}
+      <div className="mt-12 border-t border-line lg:mt-0">
+        <div className="shell">
+          <dl className="grid grid-cols-2 divide-line lg:grid-cols-4 lg:divide-x">
+            {credentials.map((item, i) => (
+              <div
+                key={item.label}
+                className={`py-5 lg:px-7 lg:first:pl-0 lg:last:pr-0 ${
+                  i % 2 === 1 ? "border-l border-line pl-5 lg:border-l-0 lg:pl-7" : ""
+                } ${i < 2 ? "border-b border-line lg:border-b-0" : ""}`}
               >
-                <span className="text-brand">◆</span>
-                {item}
-              </span>
+                <dt className="font-display text-[22px] leading-none text-teal-700">
+                  {item.value}
+                </dt>
+                <dd className="mt-1.5 text-[13px] leading-snug text-ink-mute">
+                  {item.label}
+                </dd>
+              </div>
             ))}
-          </div>
-        </div>
-
-        {/* Why choose us tiles */}
-        <div className="mb-16">
-          <h3 className="mb-10 text-center font-display text-2xl tracking-tight md:text-4xl">
-            Why choose <span className="text-gradient-brand">{site.name}?</span>
-          </h3>
-
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6 md:gap-6">
-            {heroUsps.map((usp) => {
-              const Icon = icons[usp.icon] ?? Award;
-              return (
-                <div
-                  key={usp.title}
-                  className="glass-card group rounded-[18px] p-5 text-center transition-all duration-300 hover:-translate-y-1"
-                >
-                  <div className="mx-auto mb-3 grid h-14 w-14 place-items-center rounded-full bg-brand-soft transition-transform duration-300 group-hover:scale-110">
-                    <Icon className="h-6 w-6 text-brand" />
-                  </div>
-                  <h4 className="mb-1 text-sm font-bold leading-tight md:text-[15px]">
-                    {usp.title}
-                  </h4>
-                  <p className="text-xs leading-snug text-[var(--text-dim)]">{usp.desc}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Commitment list */}
-        <div className="glass-card mx-auto max-w-4xl rounded-[22px] p-6 md:p-10">
-          <h3 className="mb-6 border-b border-[var(--line-soft)] pb-4 text-center font-display text-xl text-gradient-brand md:text-2xl">
-            Our Commitment to Ethical Practice
-          </h3>
-          <ul className="grid gap-4 md:grid-cols-2">
-            {commitments.map((item) => (
-              <li key={item} className="flex items-start gap-3">
-                <span className="mt-0.5 text-brand">★</span>
-                <span
-                  className="text-sm text-[var(--text-mute)] md:text-[15px] [&_strong]:text-[var(--text)]"
-                  dangerouslySetInnerHTML={{ __html: item }}
-                />
-              </li>
-            ))}
-          </ul>
-          <div className="mt-8 text-center">
-            <button onClick={onBookAppointment} className="btn btn-brand w-full md:w-auto">
-              Request a Call Back ➤
-            </button>
-            <small className="mt-3 block text-sm text-[var(--text-dim)]">
-              Includes consultation, OPG scan &amp; written estimate
-            </small>
-          </div>
+          </dl>
         </div>
       </div>
     </section>

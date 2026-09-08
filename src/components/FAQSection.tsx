@@ -1,67 +1,47 @@
-'use client';
+import { faqs } from "@/config/site";
 
-import { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
-import { faqs } from '@/config/site';
-
+/**
+ * FAQ.
+ *
+ * Native <details>, so it opens without JavaScript, needs no client bundle and
+ * is keyboard-accessible for free. The FAQPage schema stays.
+ */
 export default function FAQSection() {
-  const [openFAQ, setOpenFAQ] = useState<number | null>(0);
-
   const faqSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
     mainEntity: faqs.map((f) => ({
-      '@type': 'Question',
+      "@type": "Question",
       name: f.q,
-      acceptedAnswer: { '@type': 'Answer', text: f.a },
+      acceptedAnswer: { "@type": "Answer", text: f.a },
     })),
   };
 
   return (
-    <section id="faq" className="bg-white">
+    <section id="faq" className="band border-b border-line bg-paper-soft">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <div className="shell-narrow">
-        <div className="mb-12 text-center">
+      <div className="shell grid gap-10 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20">
+        <div className="lg:sticky lg:top-[calc(var(--header-h)+3rem)] lg:self-start">
           <p className="eyebrow">Questions</p>
-          <h2 className="section-title mt-3">
-            Frequently asked <span className="text-gradient-brand">questions</span>
-          </h2>
-          <div className="rule-brand mt-6" />
+          <h2 className="h2 mt-4">Before you call.</h2>
         </div>
 
-        <div className="space-y-4">
-          {faqs.map((faq, index) => {
-            const open = openFAQ === index;
-            return (
-              <div
-                key={faq.q}
-                className={`overflow-hidden rounded-[18px] border transition-colors ${
-                  open ? 'border-line bg-[var(--surface)]' : 'border-[var(--line-soft)]'
-                }`}
-              >
-                <button
-                  onClick={() => setOpenFAQ(open ? null : index)}
-                  aria-expanded={open}
-                  className="flex w-full items-center justify-between gap-4 p-5 text-left font-semibold transition-colors hover:text-brand md:p-6 md:text-[17px]"
-                >
-                  <span>{faq.q}</span>
-                  <ChevronDown
-                    className={`h-5 w-5 shrink-0 text-brand transition-transform duration-300 ${
-                      open ? 'rotate-180' : ''
-                    }`}
-                  />
-                </button>
-                {open && (
-                  <div className="border-t border-[var(--line-soft)] p-5 md:p-6">
-                    <p className="text-[15px] leading-relaxed text-[var(--text-mute)]">{faq.a}</p>
-                  </div>
-                )}
-              </div>
-            );
-          })}
+        <div className="border-t border-line">
+          {faqs.map((faq) => (
+            <details key={faq.q} className="group border-b border-line">
+              <summary className="flex cursor-pointer list-none items-start justify-between gap-6 py-5 text-[17px] font-medium leading-snug transition-colors hover:text-teal-700 [&::-webkit-details-marker]:hidden">
+                {faq.q}
+                <span
+                  aria-hidden
+                  className="relative mt-2 h-[2px] w-4 shrink-0 bg-teal-700 before:absolute before:inset-0 before:bg-teal-700 before:transition-transform before:duration-200 before:content-[''] group-open:before:rotate-0 before:rotate-90"
+                />
+              </summary>
+              <p className="muted max-w-prose pb-6 pr-8">{faq.a}</p>
+            </details>
+          ))}
         </div>
       </div>
     </section>
