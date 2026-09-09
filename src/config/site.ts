@@ -1,45 +1,68 @@
 /**
- * Single source of truth for every piece of Pearl Dental copy, contact detail
- * and claim on the landing page. Components never hard-code clinic data.
+ * Single source of truth for every fact, claim and piece of copy on the page.
+ * Components never hard-code clinic data.
  *
  * SOURCING RULE
  * -------------
- * Everything rendered on the page must trace back to one of:
- *   [BRIEF]  PROJECT-BRIEF.md — supplied by the client at onboarding
- *   [LOGO]   the supplied brand artwork (logo.jpg)
- *   [FB]     the clinic's own Facebook page, facebook.com/pearldentalchennai
+ * Everything rendered must trace back to one of:
+ *   [CLIENT] the client's written brief in this revision
+ *   [DRIVE]  the client's Google Drive — file named in the comment
+ *   [SITE]   pearldentalchennai.in, the clinic's own website
  *   [PHOTO]  a photograph in /public that plainly shows the thing claimed
  *
- * Anything that cannot be traced lives in `unverified` at the bottom of this
- * file and is NOT rendered. Move an entry up only once the client confirms it.
+ * Anything untraceable, or contradicted by its own source, lives in
+ * `unverified` at the bottom and is NOT rendered. Move an entry up only once
+ * the clinic confirms it.
  */
 
 export const site = {
-  name: "Pearl Dental", // [LOGO][FB]
-  strapline: "Advanced Dental Care", // [LOGO] — the wordmark's own descriptor
-  tagline: "Implant, Root Canal & Full Mouth Rehabilitation, Anna Nagar East",
+  name: "Pearl Dental",
+  strapline: "Advanced Dental Care", // logo artwork
+  tagline: "Specialist prosthodontic and implant rehabilitation, Anna Nagar East",
   city: "Chennai",
-  website: "https://www.pearldentalchennai.in", // [BRIEF] — note: FB cover shows .com
+  website: "https://www.pearldentalchennai.in",
+  established: "2013", // [DRIVE] Dr.Egammai.docx, Professional-affiliations.docx
 
   doctor: {
-    name: "Dr. Egammai Manikandan", // [CLIENT]
+    name: "Dr. Egammai Manikandan",
     shortName: "Dr. Egammai",
+    role: "Founder & Chief Dentist, Pearl Dental Chennai", // [CLIENT]
+    credential: "Prosthodontist & Implantologist · Gold Medalist", // [CLIENT]
+    experience: "18+ years", // [CLIENT][DRIVE]
     /**
-     * [CLIENT 2026-09-09] Approved credential presentation. This replaces the
-     * previous build's "MDS, Implantologist & Maxillofacial Prosthodontist",
-     * which was not supplied by the clinic — see `unverified.credentialPrevious`.
+     * [CLIENT] Approved biography, verbatim. Only the first paragraph is
+     * rendered: the second restates `expertise` almost word for word, and the
+     * third is values language that a landing page does not have room for.
+     * Both are kept here so nothing approved is lost.
      */
-    role: "Founder & Chief Dentist, Pearl Dental Chennai",
-    credential: "Prosthodontist & Implantologist · Gold Medalist",
-    experience: "18+ years", // [CLIENT] — supersedes the brief's flat "18 years"
-    established: "2013", // [CLIENT]
-    /** [CLIENT] Approved biography, verbatim, split into paragraphs. */
     bio: [
       "With over 18 years of clinical experience, Dr. Egammai Manikandan leads Pearl Dental Chennai with a focus on advanced dentistry, implant rehabilitation and personalised patient care.",
       "A Gold Medalist in Prosthodontics, her clinical expertise includes Strategic Implantology, Immediate Loading Dental Implants and complex implant rehabilitation, including challenging cases involving severe bone loss and medically compromised patients.",
       "Since establishing Pearl Dental Chennai in 2013, she has built the practice around clinical excellence, ethical treatment, patient safety and uncompromising quality — with every treatment plan tailored to the individual needs of the patient.",
     ],
-    /** [CLIENT] Approved clinical expertise list. */
+    /** [DRIVE] Professional-affiliations.docx — qualifications, verbatim facts. */
+    qualifications: [
+      "BDS, and MDS in Prosthodontics & Crown Bridge",
+      "Gold Medalist and University Topper, MDS Prosthodontics",
+      "State Second Rank, postgraduate entrance examination",
+    ],
+    /** [DRIVE] Professional-affiliations.docx — Advanced Training. */
+    training: [
+      "Advanced training in maxillofacial prosthodontics at King's College London",
+      "Master's programme in Implantology, Munich, Germany",
+    ],
+    /** [DRIVE] Professional-affiliations.docx — Professional Affiliations. */
+    affiliations: [
+      "Vice Chairman, Indian Board of Implantology",
+      "Consultant, Apollo Proton Cancer Centre, Chennai",
+      "Indian Prosthodontic Society · Indian Dental Association",
+      "Indian Association of Oral Implantologists",
+    ],
+    /**
+     * [CLIENT] Approved clinical expertise. NOT rendered in the founder
+     * section — it duplicated bio paragraph two, and what the practice treats
+     * is already covered by `patientProblems` and `treatmentGroups`.
+     */
     expertise: [
       {
         title: "Strategic Implantology",
@@ -58,262 +81,383 @@ export const site = {
         body: "Full-mouth rehabilitation and functional, aesthetic dental restoration.",
       },
     ],
-    /** [CLIENT] Approved credibility line. Set small — never as oversized figures. */
+    /**
+     * [CLIENT] Approved credibility line. NOT rendered — it repeats the
+     * credential line printed directly under her name, and the hero's
+     * credibility row. Kept for reuse elsewhere.
+     */
     credibility: [
       "18+ Years of Experience",
       "Gold Medalist",
       "Prosthodontist & Implantologist",
     ],
     /**
-     * The clinic's own photographs. Captions describe strictly what is visible in
-     * each frame — no dates, awarding bodies or achievements are inferred.
+     * The four credentials that actually earn their space on a landing page,
+     * drawn from `qualifications`, `training` and `affiliations` above — those
+     * three lists are nine items between them, which is a CV, not a reason to
+     * book. The full lists stay for the clinic's own website.
      */
-    /**
-     * Supporting credibility photographs for the founder section. Captions
-     * describe strictly what is visible in each frame — no dates, awarding
-     * bodies or achievements are inferred.
-     *
-     * The desk portrait (`/doc.webp`) is deliberately not repeated here; it
-     * leads the hero, and the client asked for this section to carry the two
-     * award photographs alone.
-     */
-    photos: [
-      {
-        src: "/award.jpg",
-        alt: "Dr. Egammai Manikandan receiving International Implant Foundation certification",
-        caption: "Certification from the International Implant Foundation.",
-        position: "50% 38%",
-      },
-      {
-        src: "/doctor.jpg",
-        alt: "Dr. Egammai Manikandan receiving an Award of Excellence",
-        caption: "Receiving an Award of Excellence for implant dentistry.",
-        position: "50% 24%",
-      },
+    proof: [
+      "MDS Prosthodontics & Crown Bridge — University Topper",
+      "Consultant, Apollo Proton Cancer Centre, Chennai",
+      "Vice Chairman, Indian Board of Implantology",
+      "Advanced training at King's College London and in Munich, Germany",
     ],
+    photos: {
+      /** [DRIVE] Doctor and Clinic Info/About Dr.Egammai — clinical portrait. */
+      clinical: {
+        src: "/doctor/clinical.jpg",
+        alt: "Dr. Egammai Manikandan in a treatment room at Pearl Dental, Chennai",
+        position: "38% 42%",
+      },
+      /** [DRIVE] Dr professional picture — at her consulting desk. */
+      desk: {
+        src: "/doctor/desk.jpg",
+        alt: "Dr. Egammai Manikandan at her consulting desk at Pearl Dental",
+        position: "47% 46%",
+      },
+    },
   },
 
   contact: {
-    phones: ["09600085760", "9884389539", "9840689539"], // [BRIEF]
-    whatsapp: "919600085760",
-    email: "pearldentalchennai@gmail.com", // [BRIEF]
-    // [CLIENT 2026-09-09] Corrected address, supplied and confirmed by the clinic.
-    // Structured once here; the display lines, the schema.org PostalAddress, the
-    // map links and the FAQ answer all derive from it.
+    /** [CLIENT] + [SITE] — the two agree exactly. */
+    phones: [
+      { display: "+91 98843 89539", tel: "+919884389539", note: "Appointments & WhatsApp" },
+      { display: "+91 98406 89539", tel: "+919840689539", note: "Appointments" },
+      { display: "044 3573 3303", tel: "+914435733303", note: "Clinic landline" },
+    ],
+    /** [SITE] names this number as the clinic's WhatsApp. */
+    whatsapp: "919884389539",
+    email: "pearldentalimplant@gmail.com", // [CLIENT][SITE]
     address: {
-      street: "F Block, 77, 3rd Cross St, Block F",
+      street: "101/1, F Block, 3rd Street",
       locality: "Anna Nagar East, Chennai",
       region: "Tamil Nadu",
       postalCode: "600102",
       country: "IN",
     },
     addressLines: [
-      "F Block, 77, 3rd Cross St, Block F",
-      "Anna Nagar East, Chennai",
-      "Tamil Nadu 600102",
+      "101/1, F Block, 3rd Street",
+      "Anna Nagar East, Chennai – 600102",
     ],
     addressFull:
-      "F Block, 77, 3rd Cross St, Block F, Anna Nagar East, Chennai, Tamil Nadu 600102",
-    // Retained from the onboarding brief, which listed it against the older
-    // street number. Worth reconfirming now the address has been corrected.
-    landmark: "Near Valliammal School, behind Hotel Bhalaji Bhavan",
-    // Business name + full confirmed address, so the pin resolves to the
-    // clinic's own listing rather than to the street alone.
+      "101/1, F Block, 3rd Street, Anna Nagar East, Chennai – 600102",
+    landmark: "Behind Hotel Bhalaji Bhavan", // [CLIENT][SITE]
     googleMapsLink:
-      "https://www.google.com/maps/search/?api=1&query=Pearl+Dental+F+Block+77+3rd+Cross+St+Anna+Nagar+East+Chennai+Tamil+Nadu+600102",
-    // Resolved target of the ?output=embed redirect — one hop fewer for the iframe.
+      "https://www.google.com/maps/search/?api=1&query=Pearl+Dental+101%2F1+F+Block+3rd+Street+Anna+Nagar+East+Chennai+600102",
     mapEmbed:
-      "https://www.google.com/maps/embed?origin=mfe&pb=!1m2!2m1!1sPearl+Dental+F+Block+77+3rd+Cross+St+Anna+Nagar+East+Chennai+Tamil+Nadu+600102",
-    // Replace with the Place-ID review link once the client shares the GMB listing.
+      "https://www.google.com/maps/embed?origin=mfe&pb=!1m2!2m1!1sPearl+Dental+101%2F1+F+Block+3rd+Street+Anna+Nagar+East+Chennai+600102",
+    /** Superseded by `googleRating.listing`, which is the canonical place URL. */
     googleReviewsLink:
-      "https://www.google.com/maps/search/?api=1&query=Pearl+Dental+F+Block+77+3rd+Cross+St+Anna+Nagar+East+Chennai+Tamil+Nadu+600102",
+      "https://www.google.com/maps/place/PEARL+DENTAL/@13.0857697,80.222169,17z/data=!4m8!3m7!1s0x3a52667795cd1c95:0x5afae8e0fa37a1ad!8m2!3d13.0857697!4d80.222169!9m1!1b1!16s%2Fg%2F11d_f1f451",
   },
 
   hours: {
+    /** [CLIENT][SITE] */
     lines: [
-      { days: "Monday – Saturday", time: "9:30 AM – 1:00 PM" },
-      { days: "Monday – Saturday", time: "4:00 PM – 8:00 PM" },
-      { days: "Sunday", time: "Closed" },
-    ], // [BRIEF]
-    schema: ["Mo-Sa 09:30-13:00", "Mo-Sa 16:00-20:00"],
-    summary: "Mon–Sat · 9:30–1:00 & 4:00–8:00",
+      { days: "Monday – Saturday", time: "9:00 AM – 9:00 PM" },
+      { days: "Sunday", time: "10:00 AM – 1:00 PM" },
+    ],
+    note: "Emergency appointments supported outside standard hours.", // [SITE][DRIVE] FAQs.docx
+    schema: ["Mo-Sa 09:00-21:00", "Su 10:00-13:00"],
+    summary: "Mon–Sat 9am–9pm · Sun 10am–1pm",
   },
 
   social: {
-    // [CLIENT 2026-09-09] Both corrected. The brief's Facebook URL pointed at a
-    // different practitioner's page and its Instagram handle at the wrong account.
-    facebook: "https://www.facebook.com/pearldentalchennai/",
-    instagram: "https://www.instagram.com/pearldentalchennai/",
-    youtube: "https://www.youtube.com/@pearldentalchennai", // [BRIEF]
+    facebook: "https://www.facebook.com/pearldentalchennai/", // [CLIENT]
+    instagram: "https://www.instagram.com/pearldentalchennai/", // [CLIENT]
   },
 
-  /** Entry price only. Never the headline argument — see PROJECT-BRIEF positioning. */
-  pricing: {
-    implantFrom: "₹20,000", // [BRIEF]
-    note: "per implant, before the crown and any grafting",
-  },
-
-  /** What a first visit actually includes. Used by every CTA subtitle. */
   consultation: {
-    includes: "Examination, in-house OPG scan and a written estimate",
-    short: "Consultation, OPG scan & written estimate",
+    includes: "Clinical examination, diagnostic evaluation and a treatment estimate",
+    short: "Examination, evaluation and a treatment estimate",
   },
 } as const;
 
 /**
- * Thin credibility row under the hero. Only facts with a source.
+ * [DRIVE] Photo's and Video's/Clinic awards — read directly off the certificate.
  */
+export const award = {
+  title: "Excellence in Multidisciplinary Dental Practice",
+  body: "International Award of Excellence & Asia Healthcare Awards 2022, by resolution of the IAE Awards Council.",
+  date: "28 August 2022",
+  image: "/awards/iae-2022.jpg",
+  imageAlt:
+    "The 2022 International Award of Excellence certificate presented to Pearl Dental",
+  ceremony: "/awards/ceremony.jpg",
+  ceremonyAlt: "Dr. Egammai Manikandan receiving the award on stage",
+};
+
+/** Thin credibility row under the hero. Every entry has a source. */
 export const credentials = [
-  { value: "18+ years", label: "of clinical practice" }, // [CLIENT]
-  { value: "In-house", label: "OPG & intraoral scanning" }, // [BRIEF] USP
-  { value: "In-house", label: "Endodontist for root canals" }, // [BRIEF] USP
-  { value: "Certified", label: "by the International Implant Foundation" }, // [PHOTO] award.jpg
+  { value: "Since 2013", label: "specialist-led practice in Anna Nagar" },
+  { value: "18+ years", label: "prosthodontic & implant experience" },
+  { value: "MDS", label: "Prosthodontics — University Topper" },
+  { value: "IAE 2022", label: "Excellence in Multidisciplinary Practice" },
+];
+
+/**
+ * Patient problem recognition. Framed as the situations the clinic states it
+ * treats — every line maps to a service in [DRIVE] Services offered.docx.
+ */
+export const patientProblems = [
+  {
+    title: "You have been told there is not enough bone",
+    body: "Advanced implant options exist for selected patients with very little or no available bone.",
+  },
+  {
+    title: "You are missing all or most of your teeth",
+    body: "Full-mouth implant rehabilitation restores fixed teeth, chewing function and appearance.",
+  },
+  {
+    title: "You are diabetic and were turned away",
+    body: "Strategic implant systems are planned for appropriately evaluated diabetic patients.",
+  },
+  {
+    title: "Your denture moves when you eat or speak",
+    body: "Implant-supported fixed teeth remove the movement a removable denture cannot avoid.",
+  },
+  {
+    title: "A previous implant or bridge has failed",
+    body: "Complex rehabilitation for extensive tooth loss, bone loss and other difficult conditions.",
+  },
+  {
+    title: "You want it done in fewer visits",
+    body: "Where clinically suitable, immediate functional loading places fixed teeth on surgery day.",
+  },
 ];
 
 export const whyChooseUs = [
   {
-    title: "An implant practice first",
-    body: "Implantology is what the clinic is built around, not a service added to a general list. Cases are planned digitally from an OPG taken on the first visit.",
+    title: "Specialist-led, not generalist",
+    body: "Every plan is made and supervised by a Prosthodontist and Implantologist — the specialism concerned with how the final teeth actually work, not only with placing the implant.",
   },
   {
-    title: "Everything under one roof",
-    body: "Imaging, scanning, surgery, root canals and follow-up all happen in the clinic. Nothing is referred out halfway through your treatment.",
+    title: "Built for the complex cases",
+    body: "Severe bone loss, complete tooth loss, uncontrolled diabetes, compromised immunity, and rehabilitation after head and neck cancer treatment.",
   },
   {
-    title: "Complex and reduced-bone cases",
-    body: "The practice takes on full mouth rehabilitation and cases where bone volume is limited — the situations other clinics often decline.",
+    title: "Surgery and prosthetics planned together",
+    body: "Implant position is planned backwards from the final restoration, so the teeth you end up with drive the surgery rather than the other way round.",
   },
   {
-    title: "A written estimate before we start",
-    body: "You leave the first consultation with the plan and the cost in writing, and a reason for every line on it.",
+    title: "Told plainly, priced plainly",
+    body: "Clear explanations of the options, the costs and the expected outcome, with a written estimate before treatment begins.",
+  },
+];
+
+/** [SITE] + [DRIVE] Services offered.docx — technology named by the clinic itself. */
+export const capabilities = [
+  {
+    meta: "Imaging",
+    title: "In-clinic imaging",
+    body: "Diagnostic imaging on site, so bone volume and implant position are assessed at the clinic rather than at an external scan centre.",
+  },
+  {
+    meta: "Planning",
+    title: "CAD/CAM digital workflow",
+    body: "Restorations designed and produced digitally for a more precise fit than conventional impression-and-cast methods.",
+  },
+  {
+    meta: "Surgery",
+    title: "Custom surgical guides",
+    body: "Implants placed through a guide fabricated for your anatomy, which is what makes flapless, minimally invasive placement possible.",
+  },
+  {
+    meta: "Comfort",
+    title: "Anaesthesia and monitoring",
+    body: "State-of-the-art anaesthesia and monitoring technique, which is what allows longer surgical appointments to be completed in one sitting.",
+  },
+  {
+    meta: "Prosthetics",
+    title: "Immediate loading protocols",
+    body: "For clinically suitable patients, fixed teeth placed on the same day as implant surgery.",
+  },
+  {
+    meta: "Multidisciplinary",
+    title: "A full clinical team",
+    body: "Implantology, prosthodontics, oral and maxillofacial surgery, periodontics and endodontics under one practice.",
+  },
+];
+
+/** [DRIVE] Services offered.docx — grouped exactly as the clinic groups them. */
+export const treatmentGroups = [
+  {
+    group: "Implants & rehabilitation",
+    lead: true,
+    items: [
+      {
+        title: "Full Mouth Dental Implants",
+        body: "Complete replacement of missing teeth using implant-supported fixed teeth and full-mouth rehabilitation.",
+      },
+      {
+        title: "Immediate Functional Loading Implants",
+        body: "For clinically suitable patients, fixed teeth placed on the same day as implant surgery.",
+      },
+      {
+        title: "Strategic Implants",
+        body: "Advanced implant solutions for patients seeking permanent teeth within a shorter treatment timeframe.",
+      },
+      {
+        title: "Complex Implant Rehabilitation",
+        body: "For extensive tooth loss, severe bone loss and other complex clinical conditions.",
+      },
+      {
+        title: "No-Bone / Low-Bone Implant Cases",
+        body: "Advanced implant solutions for selected patients with very little or no available bone.",
+      },
+      {
+        title: "Implants for Diabetic Patients",
+        body: "Strategic implant systems for appropriately evaluated diabetic patients.",
+      },
+      {
+        title: "Flapless Implant Surgery",
+        body: "Minimally invasive implant placement using customised surgical guides.",
+      },
+      {
+        title: "Maxillofacial Prosthodontics",
+        body: "Oral and facial rehabilitation for congenital or acquired defects of the head and neck.",
+      },
+    ],
+  },
+  {
+    group: "Cosmetic & orthodontic",
+    items: [
+      {
+        title: "Cosmetic Dentistry & Smile Designing",
+        body: "Digital smile design, porcelain veneers, dental bonding and professional whitening.",
+      },
+      {
+        title: "Invisalign Aligners",
+        body: "Clear, discreet orthodontic treatment without conventional metal braces.",
+      },
+    ],
+  },
+  {
+    group: "General & preventive",
+    items: [
+      {
+        title: "Root Canal Treatment",
+        body: "Endodontic treatment for infected or damaged teeth.",
+      },
+      {
+        title: "Crowns & Bridges",
+        body: "Restorative solutions for damaged, weakened or missing teeth.",
+      },
+      {
+        title: "Gum Disease Treatment",
+        body: "Diagnosis and treatment of gingivitis and periodontitis.",
+      },
+      {
+        title: "Professional Dental Cleaning",
+        body: "Cleaning and preventive care to remove plaque and tartar.",
+      },
+    ],
   },
 ];
 
 /**
- * "Under one roof" capability list. Each entry is a facility the brief lists as
- * present in the clinic — this is the section the ad angles land on.
+ * Treatment planning — why the recommendation comes after the examination.
+ *
+ * This replaces the published price table. The clinic's real price guide is
+ * genuine client data (Drive: Pricing.docx) and is preserved verbatim in
+ * `unverified.priceGuide` so it can be restored if the positioning changes, but
+ * NOTHING on this page may display a figure: no amounts, no "from", no
+ * "starting at", no affordability claims.
  */
-export const capabilities = [
-  {
-    title: "In-house OPG",
-    body: "A full-mouth digital X-ray taken in the clinic, so bone levels are assessed and the implant plan is drawn on the same visit.",
-    meta: "Diagnosis",
-  },
-  {
-    title: "Intraoral scanning",
-    body: "Digital impressions instead of trays and putty — a more precise crown fit, and far easier for patients with a strong gag reflex.",
-    meta: "Planning",
-  },
-  {
-    title: "Conscious sedation",
-    body: "For dental anxiety and longer surgical appointments. You stay responsive and monitored throughout, but relaxed.",
-    meta: "Comfort",
-  },
-  {
-    title: "Soft-tissue laser",
-    body: "Gum contouring and soft-tissue work with less bleeding and faster healing, which matters around implant and crown margins.",
-    meta: "Surgery",
-  },
-  {
-    title: "In-house Endodontist",
-    body: "Root canals are completed here by a resident specialist rather than referred to another clinic mid-treatment.",
-    meta: "Specialist",
-  },
-  {
-    title: "Air polishing",
-    body: "Stain and biofilm removal that is gentler on enamel and on sensitive gums than conventional scaling alone.",
-    meta: "Hygiene",
-  },
-];
+export const treatmentPlanning = {
+  eyebrow: "Treatment planning",
+  heading: "A treatment plan tailored to your needs.",
+  description:
+    "Every smile is different. The right treatment depends on your dental condition, bone quality, number of teeth involved, implant system and the complexity of your case. After a clinical examination and necessary scans, Dr. Egammai will recommend the most appropriate treatment for you.",
+  factors: [
+    {
+      label: "Your dental condition",
+      body: "We assess your teeth, gums and overall oral health before recommending treatment.",
+    },
+    {
+      label: "Bone & gum health",
+      body: "Bone volume and gum condition can influence the type and sequence of treatment required.",
+    },
+    {
+      label: "Treatment complexity",
+      body: "Simple tooth replacement and complex full-mouth rehabilitation require different approaches.",
+    },
+    {
+      label: "Implant system & materials",
+      body: "Treatment options may vary based on the implant system, restoration and materials selected.",
+    },
+    {
+      label: "Personalised treatment plan",
+      body: "You receive a clear recommendation based on your individual clinical needs.",
+    },
+  ],
+  cta: "Book a consultation",
+  ctaNote: "Get a personalised treatment estimate after your clinical evaluation.",
+};
 
-/** [FB] cover artwork + profile intro list the services below. */
-export const treatments = [
-  {
-    title: "Dental Implants",
-    body: "Single, multiple and full-arch implants, planned digitally from your OPG and intraoral scan.",
-    price: `From ${site.pricing.implantFrom}`,
-    featured: true,
-  },
-  {
-    title: "Full Mouth Implants",
-    body: "Rebuilding a complete arch — including cases with reduced bone volume that need staged planning.",
-    price: "Staged plan",
-    featured: true,
-  },
-  {
-    title: "Root Canal Therapy",
-    body: "Completed in-house by the resident Endodontist, most cases in a single sitting.",
-    price: "In-house specialist",
-  },
-  {
-    title: "Crowns & Bridges",
-    body: "Zirconia and ceramic crowns built from a digital scan for a precise, natural fit.",
-    price: "Digital scan fit",
-  },
-  {
-    title: "Oral Surgery",
-    body: "Extractions, surgical removals and pre-implant procedures carried out at the clinic.",
-    price: "In-clinic",
-  },
-  {
-    title: "Gum Treatment",
-    body: "Scaling, air polishing and laser gum therapy for bleeding, receding or inflamed gums.",
-    price: "Laser & polishing",
-  },
-  {
-    title: "Cosmetic Dentistry",
-    body: "Whitening, veneers and smile design planned around the proportions of your face.",
-    price: "Smile design",
-  },
-  {
-    title: "Kids Dentistry",
-    body: "Preventive care, fillings and early guidance for children, at a pace they can handle.",
-    price: "Paediatric",
-  },
+/**
+ * What the first visit actually covers.
+ *
+ * Every line traces to [DRIVE] FAQs.docx — Q15 ("personalised consultation and
+ * diagnostic evaluation ... based on the patient's teeth, gums, bone condition,
+ * medical history and individual requirements") and Q16 (costs discussed at the
+ * consultation). Nothing is promised here that the clinic has not stated.
+ *
+ * Deliberately does NOT claim a CBCT or 3D scan: the clinic's sources say
+ * "advanced imaging" and "diagnostic evaluation", and nothing more specific.
+ * It also carries no figure — the estimate is given at the visit, not here.
+ */
+export const consultationIncludes = [
+  "A personal consultation with Dr. Egammai Manikandan",
+  "Assessment of your teeth, gums and bone condition",
+  "A review of your medical history and general health",
+  "The treatment options appropriate to your case, explained",
+  "An estimate of the cost, before anything begins",
 ];
 
 export const implantSteps = [
   {
     step: "01",
-    title: "Consultation & OPG",
-    body: "An examination and an in-house OPG on the first visit, so bone quality is assessed before anything is recommended.",
+    title: "Consultation & evaluation",
+    body: "Clinical examination and diagnostic evaluation of the teeth, gums, bone condition and medical history.",
   },
   {
     step: "02",
-    title: "Digital plan & written estimate",
-    body: "An intraoral scan, the implant position planned digitally, and a written cost estimate you take home with you.",
+    title: "Treatment plan & estimate",
+    body: "The options, the sequence and the cost, explained and given to you before anything begins.",
   },
   {
     step: "03",
-    title: "Placement",
-    body: "Carried out under local anaesthesia, or conscious sedation if you would rather. Usually under an hour per implant.",
+    title: "Implant placement",
+    body: "Placed under local anaesthesia, through a custom surgical guide where flapless placement is suitable.",
   },
   {
     step: "04",
-    title: "Healing & review",
-    body: "The implant integrates with the bone over roughly three to four months, reviewed at scheduled check-ins.",
+    title: "Fixed teeth",
+    body: "For clinically suitable patients, immediate functional loading places fixed teeth on the day of surgery.",
   },
   {
     step: "05",
-    title: "Final crown",
-    body: "Your permanent crown is made from the digital scan and matched in shade and shape to your natural teeth.",
+    title: "Final prosthesis & review",
+    body: "The definitive restoration is fitted and reviewed, with the fit and function checked at each visit.",
   },
 ];
 
 /**
- * Real intraoral photographs from the clinic.
+ * Real intraoral photographs from the clinic's own records.
  *
- * NOTE: the previous build had `before`/`after` swapped on cases 1 and 3 — the
- * finished prosthesis was labelled "Before". Verified against the files and
- * corrected here. Case 3's images are an edentulous ridge and an intra-operative
- * shot with no finished result, so it is held back until the client supplies the
- * final prosthesis photograph (see `unverified.cases`).
+ * Note: `before`/`after` were swapped on case 1 in an earlier build — the
+ * finished prosthesis was labelled "Before". Verified against the files here.
+ * Only non-identifiable intraoral frames are used; no patient faces appear.
  */
 export const cases = [
   {
     id: 1,
     before: "/images/cases/1/2.jpg",
     after: "/images/cases/1/1.jpg",
+    beforeLabel: "Before",
+    afterLabel: "After",
     title: "Full mouth implant rehabilitation",
     desc: "Periodontally compromised teeth replaced with a full-arch implant-supported prosthesis.",
   },
@@ -321,122 +465,239 @@ export const cases = [
     id: 2,
     before: "/images/cases/2/1.jpg",
     after: "/images/cases/2/2.jpg",
+    beforeLabel: "Before",
+    afterLabel: "After",
     title: "Full mouth rehabilitation with root canals and implants",
-    desc: "Extensive decay and weakened teeth restored with a combination of root canal treatment, implants and fixed bridgework.",
+    desc: "Extensive decay and weakened teeth restored with root canal treatment, implants and fixed bridgework.",
+  },
+  {
+    id: 4,
+    before: "/images/cases/4/1.jpg",
+    after: "/images/cases/4/2.jpg",
+    beforeLabel: "Implants placed",
+    afterLabel: "Final prosthesis",
+    title: "Full-arch implant rehabilitation",
+    desc: "Multiple implants placed in the lower arch, restored with a fixed full-arch prosthesis.",
   },
 ];
 
-/**
- * Clinic interiors, in the order a patient walks through the building.
- *
- * Photographs supplied by the clinic (`clinic image/`, June 2026). Captions and
- * alt text describe only what is visible in the frame — no hygiene, equipment or
- * certification claims are inferred from a photograph.
- *
- * `position` is the object-position for the crop. `corridor` is the only
- * portrait frame in the set, so it needs the subject pinned rather than centred
- * when it sits in a landscape slot.
- */
+/** [DRIVE] Doctor and Clinic Info/Clinic interiors — the clinic's own photographs. */
 export const clinicGallery = [
   {
-    src: "/images/clinic/entrance.jpg",
-    label: "Entrance",
-    caption: "The covered approach from the street to the clinic doors.",
-    alt: "The covered entrance walkway leading to the Pearl Dental reception, with planting either side",
-    position: "50% 55%",
-  },
-  {
-    src: "/images/clinic/corridor.jpg",
-    label: "Corridor",
-    caption: "The passage from reception through to the treatment rooms.",
-    alt: "The corridor connecting reception to the treatment rooms, with a living green wall along one side",
-    position: "50% 42%",
-  },
-  {
-    src: "/images/clinic/waiting-area.jpg",
-    label: "Waiting area",
-    caption: "Seating by the treatment-room doors, under the clinic's lit ceiling.",
-    alt: "The patient waiting area at Pearl Dental, with seating and glass doors through to the treatment corridor",
+    src: "/clinic/reception.jpg",
+    label: "Reception",
+    caption: "The pearl-shell reception desk and living green wall.",
+    alt: "The reception desk at Pearl Dental, with the clinic's shell-shaped counter and a living green wall",
     position: "50% 50%",
   },
   {
-    src: "/images/clinic/treatment-room.jpg",
+    src: "/clinic/waiting.jpg",
+    label: "Waiting area",
+    caption: "Seating beside the green wall, off the reception.",
+    alt: "The patient waiting area at Pearl Dental, with seating alongside a living green wall",
+    position: "50% 50%",
+  },
+  {
+    src: "/clinic/corridor.jpg",
+    label: "Corridor",
+    caption: "The passage from reception through to the treatment rooms.",
+    alt: "The corridor at Pearl Dental leading from reception to the treatment rooms",
+    position: "50% 45%",
+  },
+  {
+    src: "/clinic/operatory.jpg",
     label: "Treatment room",
-    caption: "One of the operatories, with the chair and the consultation desk in the same room.",
-    alt: "A treatment room at Pearl Dental with the dental chair, overhead light and a consultation desk",
+    caption: "An operatory, with the chair and consultation desk in one room.",
+    alt: "A treatment room at Pearl Dental with a dental chair, overhead light and consultation desk",
+    position: "50% 50%",
+  },
+  {
+    src: "/clinic/imaging-room.jpg",
+    label: "Imaging room",
+    caption: "In-clinic imaging, so diagnosis happens on the same visit.",
+    alt: "The imaging room at Pearl Dental with a dental X-ray unit and reporting monitor",
+    position: "50% 45%",
+  },
+  {
+    src: "/clinic/reception-detail.jpg",
+    label: "Detail",
+    caption: "The clinic mark, carved into the reception counter.",
+    alt: "The Pearl Dental logo carved into the stone reception counter",
     position: "50% 50%",
   },
 ] as const;
 
+/**
+ * [SITE] The clinic's own published review. Superseded on the page by
+ * `googleReviews`, which is attributable to a public listing; kept because it
+ * is still verified and may be useful elsewhere.
+ */
+export const testimonial = {
+  quote:
+    "I took my husband to Pearl dental for root canal treatment. We were really amazed with the hospitality given by the staff and also special mention to Dr. Egammai.",
+  name: "Rekha Ravindran",
+  attribution: "Patient's spouse",
+  source: "Published on pearldentalchennai.in",
+};
+
+/**
+ * Google reviews — read from Pearl Dental's own Google Business Profile on
+ * 9 September 2026, verbatim.
+ *
+ * `name`, `rating` and `date` are exactly as Google displays them. `text` is the
+ * reviewer's own wording, shortened only where `truncated` is true, and only by
+ * cutting at a sentence boundary and appending an ellipsis. Nothing is
+ * rewritten, and no review here was written for this page.
+ *
+ * These six are a positive selection out of 46; the listing also holds three
+ * critical reviews. That is why the real aggregate rating is printed above the
+ * grid and every CTA links to the full listing — the page must not imply these
+ * are all of them.
+ *
+ * To refresh: re-read the listing and replace this array. Do not edit the text.
+ */
+export const googleRating = {
+  score: "4.7",
+  count: 46,
+  fetched: "9 September 2026",
+  listing:
+    "https://www.google.com/maps/place/PEARL+DENTAL/@13.0857697,80.222169,17z/data=!4m8!3m7!1s0x3a52667795cd1c95:0x5afae8e0fa37a1ad!8m2!3d13.0857697!4d80.222169!9m1!1b1!16s%2Fg%2F11d_f1f451",
+};
+
+export const googleReviews = [
+  {
+    name: "Kathirvelu Selva Ganapathy",
+    rating: 5,
+    date: "a month ago",
+    text: "Dr. Egammai is a wonderful doctor. I lost all my teeth recently. And Dr. Egammai implanted all my teeth without any pain. Marvellous job she did. I am quite happy now. No pain nothing. May God bless her l life to serve humanity beings. She is the best doctor in this field in Chennai. Thanks",
+    truncated: false,
+  },
+  {
+    name: "Suresh Subramaniam",
+    rating: 5,
+    date: "a year ago",
+    text: "Had been here for a tooth extraction and couple of other treatments. Found this place absolutely professional and caring. They went one level up by doing a follow up call finding out my wellness post extraction. Amidst a lot of commercial driven dental clinics, this is a one off exception to get all dental solutions under one roof …",
+    truncated: true,
+  },
+  {
+    name: "ramprakash narayanan",
+    rating: 5,
+    date: "2 years ago",
+    text: "I have been postponing my long pending dental treatment just becoz of lack of clarity on the treatment methodology for a looong time…… But Dr. Egammai has made me understood the technicality so simply and helped me in getting confidence on the same …",
+    truncated: true,
+  },
+  {
+    name: "Dr.Muhamed Farhaan",
+    rating: 5,
+    date: "2 years ago",
+    text: "I've dealt with enamel hypoplasia due to a genetic condition, causing discoloration and chipped enamel on my teeth. Dr. Egammai recommended Zirconia crowns at Pearl Dental, and after the treatment, I can confidently say that my smile has undergone a remarkable transformation …",
+    truncated: true,
+  },
+  {
+    name: "petrishya Evg",
+    rating: 5,
+    date: "2 years ago",
+    text: "I went to Pearl Dental clinic for tooth implant. It's been seven years, I didn't have any complications or infections and am really satisfied. The Doctor is highly experienced and friendly. I would definitely recommend this dental clinic.",
+    truncated: false,
+  },
+  {
+    name: "akila somji",
+    rating: 5,
+    date: "2 years ago",
+    text: "I went to Pearl Dental clinic for a 3 tooth implant. I'm really satisfied. The doctor is very experienced and friendly. I would definitely recommend this dental clinic. This is indeed the place to go for any dental problem, very courteous staff I highly recommend this place... Yes... for Dr …",
+    truncated: true,
+  },
+];
+
+/** [DRIVE] FAQs.docx — the clinic's own approved answers, lightly trimmed. */
 export const faqs = [
   {
-    q: "How much do dental implants cost at Pearl Dental?",
-    a: "Implants start at ₹20,000 per implant. The final cost depends on the implant system, whether grafting is needed, and the type of crown chosen. You receive a written estimate after the consultation and OPG, before any treatment begins.",
+    q: "Can I get implants if I have very little or no bone?",
+    a: "Pearl Dental provides advanced implant options for selected patients with very little or no available bone. The appropriate treatment depends on your individual clinical condition and diagnostic evaluation.",
   },
   {
-    q: "Is the implant procedure painful?",
-    a: "Placement is done under local anaesthesia, so you do not feel pain during the procedure. Conscious sedation is available for anxious patients and for longer multi-implant appointments.",
+    q: "Can diabetic patients get dental implants?",
+    a: "Pearl Dental provides strategic implant solutions for appropriately evaluated diabetic patients. Your medical and dental condition is assessed before determining whether implant treatment is suitable.",
   },
   {
-    q: "How long does the full implant treatment take?",
-    a: "Placement usually takes under an hour per implant. The implant then integrates with the bone over roughly three to four months, with scheduled review visits, after which the permanent crown is fitted.",
+    q: "Can I get fixed teeth quickly after implant surgery?",
+    a: "For selected clinically suitable patients, Pearl Dental offers Immediate Functional Loading Implants, where teeth can be placed on the same day as implant surgery. Suitability depends on individual clinical assessment.",
   },
   {
-    q: "Do you do the root canal in-house or refer it out?",
-    a: "In-house. Pearl Dental has a resident Endodontist, so root canals are completed at the clinic — most in a single sitting — rather than being referred elsewhere mid-treatment.",
+    q: "What is strategic implantology?",
+    a: "An advanced approach to implant treatment designed for selected patients who require permanent teeth within a shorter treatment timeframe. The appropriate strategy is determined after clinical evaluation.",
   },
   {
-    q: "I am very anxious about dental treatment. What are my options?",
-    a: "Conscious sedation is available at the clinic. You remain responsive and monitored throughout, but relaxed. It is particularly useful when several procedures need to be completed in one longer appointment.",
+    q: "What is flapless implant surgery?",
+    a: "A minimally invasive implant procedure performed using customised surgical guides. Its suitability depends on your individual clinical condition.",
   },
   {
-    q: "I was told I do not have enough bone for implants. Is that final?",
-    a: "Not necessarily. Bone volume and general health are assessed from the in-house OPG at the first visit, and reduced-bone cases are a particular focus of the practice. Where bone is insufficient, grafting is often an option. What is possible in your case can only be confirmed after that scan.",
+    q: "Do I need to replace all my teeth if several are missing or damaged?",
+    a: "Not necessarily. The appropriate treatment depends on the condition of the remaining teeth, gums, bone and overall oral health. Pearl Dental provides personalised planning for patients requiring multiple implants or full-mouth rehabilitation.",
   },
   {
-    q: "Where is the clinic and what are the timings?",
-    a: `Pearl Dental is at ${site.contact.addressFull} — ${site.contact.landmark}. Open Monday to Saturday, 9:30 AM–1:00 PM and 4:00 PM–8:00 PM. Closed on Sunday.`,
+    q: "Why consult a Prosthodontist for a complex implant case?",
+    a: "Complex implant rehabilitation requires careful planning of both the implants and the final restoration. Dr. Egammai Manikandan is a Prosthodontist and Implantologist with over 18 years of clinical experience, with particular expertise in Strategic Implantology and Immediate Loading Dental Implants.",
+  },
+  {
+    q: "Can I get an estimate before starting treatment?",
+    a: "Yes. You can discuss your requirements and the estimated cost at your consultation. The final plan and cost depend on your individual clinical condition and the treatment required.",
+  },
+  {
+    q: "What are the clinic timings and where are you?",
+    a: "Pearl Dental is at 101/1, F Block, 3rd Street, Anna Nagar East, Chennai – 600102, behind Hotel Bhalaji Bhavan. Open Monday to Saturday, 9:00 AM – 9:00 PM, and Sunday 10:00 AM – 1:00 PM. Emergency appointments are supported outside standard hours.",
   },
 ];
 
 /**
  * ---------------------------------------------------------------------------
- * NOT RENDERED — awaiting client confirmation.
+ * NOT RENDERED — contradicted by its own source, or awaiting confirmation.
  * ---------------------------------------------------------------------------
- * Each of these appeared on the previous build without a traceable source, or
- * contradicted another figure on the same page. Confirm with the clinic, then
- * move the entry into the exported data above.
  */
 export const unverified = {
-  // Previous build showed "18,000+ implants" beside "2,300+ satisfied patients"
-  // on the same screen, and "20+ years" beside "18 years".
-  stats: [
-    { value: "18,000+", label: "Successful Implants", note: "contradicts the patient count below" },
-    { value: "2,300+", label: "Satisfied Patients" },
-    { value: "630", label: "Foreign Patients" },
-    { value: "75+", label: "Training Programs" },
-  ],
-  // A named third-party hospital affiliation. Needs written permission before it
-  // can appear in paid advertising.
-  affiliations: ["Apollo Proton Cancer Centre"],
-  // PROJECT-BRIEF says 18 years; the previous build said 20+. The client has
-  // since approved "18+ years", which is what the page now uses.
-  experienceAlternative: "20+ years",
-  // Carried over from the previous build and never supplied by the clinic.
-  // Replaced by the client-approved credential presentation.
-  credentialPrevious: "MDS, Implantologist & Maxillofacial Prosthodontist",
-  // FB cover lists a second location; no address supplied for it.
-  secondLocation: "Kilpauk",
-  // FB cover shows pearldentalchennai.com; the brief says .in.
-  websiteAlternative: "https://www.pearldentalchennai.com",
-  // Four named patient testimonials with 5-star ratings, presented as Google
-  // reviews. No source. Removed from the page entirely.
-  testimonials: "removed — see README",
-  // Case 3 has an edentulous "before" and an intra-operative shot, but no
-  // finished prosthesis photograph.
-  cases: "case 3 held back — needs a final result photograph",
-  // The award photographs show an International Implant Foundation certificate
-  // and an Award of Excellence plaque. The awarding bodies and dates should be
-  // confirmed before any stronger wording is used.
-  awards: "captioned descriptively from the photographs only",
+  /**
+   * [DRIVE] Pricing.docx — the clinic's real published starting prices, kept
+   * verbatim. Deliberately NOT rendered: the client's direction is that this
+   * landing page carries no figures at all, so that treatment is discussed
+   * after a clinical evaluation rather than shopped on price. Restore into a
+   * rendered export only on an explicit instruction.
+   */
+  priceGuide: {
+    implants: ["Adin ₹20,000", "Simpladent ₹20,000", "Alpha Bio / Osstem ₹35,000", "Nobel Active ₹52,000"],
+    implantCrowns: ["Metal-ceramic ₹10,500 onwards", "Zirconia screw-retained ₹18,500 onwards"],
+    regularCrowns: ["Metal-ceramic ₹9,000 onwards", "Zirconia ₹16,000 onwards"],
+    fullArch: ["Immediate-loading implants + hybrid prosthesis ₹2,50,000 / arch", "Premium zirconia rehabilitation ₹3,40,000 / arch"],
+    aligners: ["Clear aligners from ₹1,50,000"],
+    note: "Additional procedures — extractions, bone grafting, sinus lifting — may be charged separately.",
+    payment: "Cash, card and EMI options for eligible treatment plans.",
+  },
+  /**
+   * The clinic's own website states BOTH "15,000+ implants placed" and
+   * "18,000+ successful implants" on the same page, alongside "2,300+ satisfied
+   * patients". The Drive biography says "over 5,000 patients and more than
+   * 15,000 dental implants, according to the Pearl Dental website" — i.e. it
+   * cites the website rather than clinic records. Because the figures conflict
+   * at source, no implant or patient count is displayed anywhere on this page.
+   */
+  counts: {
+    siteA: "15,000+ implants",
+    siteB: "18,000+ successful implants",
+    sitePatients: "2,300+ satisfied patients",
+    drivePatients: "5,000+ patients",
+    foreignPatients: "630 foreign patients",
+    trainingPrograms: "75+ training programmes",
+  },
+  /**
+   * Drive holds patient case material (Shyama Daga, Yaw Addei) including
+   * identifiable face photographs. Only non-identifiable intraoral frames are
+   * used on this page; the face photographs need documented marketing consent
+   * before they can appear.
+   */
+  identifiablePatients: "face photographs held back pending written consent",
+  /** Video testimonials exist in Drive but are unedited and unattributed. */
+  testimonials: "video files in Drive — need patient names and consent to publish",
+  /** Superseded by the client's current brief and the clinic's own website. */
+  supersededAddress: "F Block, 77, 3rd Cross St, Block F, Anna Nagar East",
+  supersededEmail: "pearldentalchennai@gmail.com",
+  supersededPhone: "09600085760",
 };

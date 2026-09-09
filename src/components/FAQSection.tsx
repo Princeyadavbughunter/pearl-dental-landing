@@ -1,4 +1,5 @@
-import { faqs } from "@/config/site";
+import BookButton from "./lead/BookButton";
+import { faqs, site } from "@/config/site";
 
 /**
  * FAQ.
@@ -42,6 +43,13 @@ export default function FAQSection() {
               <p className="muted max-w-prose pb-6 pr-8">{faq.a}</p>
             </details>
           ))}
+
+          <div className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+            <BookButton className="btn btn-primary">Ask us directly</BookButton>
+            <p className="text-[14px] text-ink-mute">
+              Or call {site.contact.phones[0].display}.
+            </p>
+          </div>
         </div>
       </div>
     </section>

@@ -7,15 +7,16 @@ import { site } from "@/config/site";
 import { telHref } from "@/lib/contact";
 import { useLeadDialog } from "./lead/LeadProvider";
 
-const NAV = [
-  { href: "#why", label: "Why us" },
-  { href: "#doctor", label: "Dentist" },
-  { href: "#treatments", label: "Treatments" },
-  { href: "#technology", label: "Under one roof" },
-  { href: "#cases", label: "Cases" },
-  { href: "#visit", label: "Visit" },
-];
-
+/**
+ * Header.
+ *
+ * Deliberately has no navigation menu. This is a campaign landing page, not the
+ * clinic's website: a visitor arriving from an ad has one decision to make, and
+ * a row of section links only offers them ways to wander off before making it.
+ * The clinic's own site at pearldentalchennai.in is where browsing belongs.
+ *
+ * What is left is the two things an ad click actually needs — call now, or book.
+ */
 export default function Header() {
   const { open } = useLeadDialog();
   const [scrolled, setScrolled] = useState(false);
@@ -34,8 +35,8 @@ export default function Header() {
       }`}
       style={{ borderBottom: "1px solid var(--line)" }}
     >
-      <div className="shell flex h-[var(--header-h)] items-center justify-between gap-6">
-        <a href="#top" aria-label={`${site.name} — home`} className="shrink-0">
+      <div className="shell flex h-[var(--header-h)] items-center justify-between gap-4">
+        <a href="#top" aria-label={`${site.name} — top of page`} className="shrink-0">
           {/* The full lockup at every width — the mark alone does not say who
               this is to someone arriving from an ad. */}
           <span className="hidden sm:block">
@@ -46,25 +47,13 @@ export default function Header() {
           </span>
         </a>
 
-        <nav className="hidden items-center gap-7 lg:flex" aria-label="Sections">
-          {NAV.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="whitespace-nowrap text-[14px] text-ink-soft transition-colors hover:text-teal-700"
-            >
-              {item.label}
-            </a>
-          ))}
-        </nav>
-
-        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+        <div className="flex shrink-0 items-center gap-3 sm:gap-5">
           <a
             href={telHref(site.contact.phones[0])}
-            className="hidden items-center gap-2 text-[14px] font-medium text-ink transition-colors hover:text-teal-700 sm:inline-flex"
+            className="hidden items-center gap-2 text-[15px] font-medium text-ink transition-colors hover:text-teal-700 sm:inline-flex"
           >
             <Phone className="h-4 w-4 text-teal-700" aria-hidden />
-            {site.contact.phones[0]}
+            {site.contact.phones[0].display}
           </a>
           <button
             onClick={open}

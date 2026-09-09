@@ -11,7 +11,7 @@ export default function ClinicBand() {
     <section id="clinic" aria-label="Inside the clinic" className="relative bg-teal-900">
       <div className="relative h-[58vw] max-h-[620px] min-h-[300px] w-full">
         <Image
-          src="/hero.jpg"
+          src="/clinic/reception-wide.jpg"
           alt={`The reception at ${site.name}, Anna Nagar East, Chennai`}
           fill
           sizes="100vw"

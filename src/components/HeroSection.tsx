@@ -7,12 +7,13 @@ import { telHref } from "@/lib/contact";
 /**
  * Hero.
  *
- * One idea, stated plainly, next to a real photograph of the dentist in her own
+ * One claim, stated plainly, beside a real photograph of the dentist in her own
  * consulting room. No pricing headline, no offer card, no countdown — the first
- * impression is meant to be "this is a real practice", not "this is an advert".
+ * impression is meant to read as a real specialist practice, not an advert.
  */
 export default function HeroSection() {
   const phone = site.contact.phones[0];
+  const { desk } = site.doctor.photos;
 
   return (
     <section id="top" className="border-b border-line bg-white">
@@ -27,14 +28,14 @@ export default function HeroSection() {
           </p>
 
           <h1 className="display mt-5">
-            Implant dentistry that starts and finishes in{" "}
-            <em className="not-italic text-teal-700">one clinic</em>.
+            Fixed teeth again — including the cases{" "}
+            <em className="not-italic text-teal-700">others turn down</em>.
           </h1>
 
           <p className="lede mt-6">
-            {site.doctor.name} — {site.doctor.credential}. {site.doctor.experience} of
-            implant-focused practice in Anna Nagar East, with imaging, surgery, root
-            canals and follow-up all in the building.
+            {site.doctor.name} — {site.doctor.credential}. {site.doctor.experience} in
+            full-mouth implant rehabilitation, immediate loading and strategic
+            implantology, including severe bone loss and medically complex patients.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -43,16 +44,17 @@ export default function HeroSection() {
             </BookButton>
             <a href={telHref(phone)} className="btn btn-outline sm:px-8">
               <Phone className="h-4 w-4 text-teal-700" aria-hidden />
-              {phone}
+              {phone.display}
             </a>
           </div>
 
+          {/* No figures anywhere on this page — treatment is quoted after the
+              clinical evaluation, not shopped from a headline. */}
           <p className="mt-5 text-[14px] leading-relaxed text-ink-mute">
             {site.consultation.includes}.
             <span className="mt-1 block">
-              Implants from{" "}
-              <span className="font-medium text-ink">{site.pricing.implantFrom}</span>{" "}
-              {site.pricing.note}.
+              Your treatment plan and its cost are confirmed after that
+              examination — never before it.
             </span>
           </p>
         </div>
@@ -61,14 +63,14 @@ export default function HeroSection() {
         <figure className="-mx-5 mt-2 sm:-mx-8 lg:mx-0 lg:mt-0">
           <div className="figure relative aspect-[4/3] w-full lg:aspect-[4/5] lg:rounded-sm">
             <Image
-              src="/doc.webp"
-              alt={`${site.doctor.name} at Pearl Dental, Anna Nagar East, Chennai`}
+              src={desk.src}
+              alt={desk.alt}
               fill
               priority
               fetchPriority="high"
               sizes="(min-width: 1024px) 44vw, 100vw"
               className="object-cover"
-              style={{ objectPosition: "47% 28%" }}
+              style={{ objectPosition: desk.position }}
             />
           </div>
           <figcaption className="px-5 pt-3 text-[13px] text-ink-mute sm:px-8 lg:px-0">
@@ -88,7 +90,7 @@ export default function HeroSection() {
                   i % 2 === 1 ? "border-l border-line pl-5 lg:border-l-0 lg:pl-7" : ""
                 } ${i < 2 ? "border-b border-line lg:border-b-0" : ""}`}
               >
-                <dt className="font-display text-[22px] leading-none text-teal-700">
+                <dt className="font-display text-[20px] leading-none text-teal-700">
                   {item.value}
                 </dt>
                 <dd className="mt-1.5 text-[13px] leading-snug text-ink-mute">

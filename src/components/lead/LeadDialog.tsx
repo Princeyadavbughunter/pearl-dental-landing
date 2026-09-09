@@ -169,7 +169,7 @@ export default function LeadDialog({
           </h2>
           <p id="lead-desc" className="muted mt-2">
             {site.consultation.includes}, with {site.doctor.name}. We call you back to
-            confirm a time — Monday to Saturday.
+            confirm a time that suits you.
           </p>
 
           {error && (
@@ -195,7 +195,7 @@ export default function LeadDialog({
                     className="underline underline-offset-2"
                     href={telHref(site.contact.phones[0])}
                   >
-                    Call {site.contact.phones[0]}
+                    Call {site.contact.phones[0].display}
                   </a>
                 </div>
               </div>
@@ -296,7 +296,7 @@ export default function LeadDialog({
                 href={telHref(site.contact.phones[0])}
                 className="font-medium text-teal-700 underline underline-offset-2"
               >
-                Call {site.contact.phones[0]}
+                Call {site.contact.phones[0].display}
               </a>
             </p>
           </form>

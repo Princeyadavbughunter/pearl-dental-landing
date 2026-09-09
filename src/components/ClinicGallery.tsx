@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import BookButton from "./lead/BookButton";
 import { clinicGallery, site } from "@/config/site";
 
 /**
@@ -211,6 +212,13 @@ export default function ClinicGallery() {
               </p>
             </div>
           </div>
+        </div>
+
+        <div className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+          <BookButton className="btn btn-primary">Book a consultation</BookButton>
+          <p className="text-[14px] text-ink-mute">
+            Come and see it for yourself — {site.hours.summary}.
+          </p>
         </div>
 
         {/* Phone controls; the counter keeps position legible without colour. */}

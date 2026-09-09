@@ -14,14 +14,14 @@ export default function TechnologySection() {
     <section id="technology" className="band bg-teal-900 text-white">
       <div className="shell">
         <div className="max-w-[46rem]">
-          <p className="eyebrow !text-teal-300">Under one roof</p>
+          <p className="eyebrow !text-teal-300">Clinical technology</p>
           <h2 className="h2 mt-4 text-white">
-            Everything an implant case needs, in the building.
+            The technology behind a predictable result.
           </h2>
           <p className="mt-5 max-w-prose text-[17px] leading-[1.65] text-white/70">
-            Imaging, scanning, surgery, sedation and specialist root canal treatment are
-            all in-house. That is what makes same-visit diagnosis possible, and it is why
-            nothing has to be referred out mid-treatment.
+            Diagnosis, digital planning, surgery and the final restoration are handled by
+            one practice and one multidisciplinary team — which is what allows the implant
+            to be planned backwards from the teeth you will actually end up with.
           </p>
         </div>
 
@@ -45,7 +45,7 @@ export default function TechnologySection() {
         <div className="mt-12 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
           <BookButton className="btn btn-white">Book a consultation</BookButton>
           <p className="text-[14px] text-white/60">
-            Your first visit includes the OPG scan and a written estimate.
+            Your first visit includes the examination, the evaluation and an estimate.
           </p>
         </div>
       </div>

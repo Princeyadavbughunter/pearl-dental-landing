@@ -1,3 +1,4 @@
+import BookButton from "./lead/BookButton";
 import { whyChooseUs, site } from "@/config/site";
 
 /**
@@ -43,6 +44,13 @@ export default function AboutSection() {
             </li>
           ))}
         </ol>
+      </div>
+
+      <div className="shell mt-12 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+        <BookButton className="btn btn-primary">Book a consultation</BookButton>
+        <p className="text-[14px] text-ink-mute">
+          One visit tells you where you stand. No obligation to proceed.
+        </p>
       </div>
     </section>
   );

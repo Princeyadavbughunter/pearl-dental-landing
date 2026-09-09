@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Newsreader } from "next/font/google";
 import "./globals.css";
-import { site } from "@/config/site";
+import { site, award } from "@/config/site";
+import Analytics from "@/components/Analytics";
 
 /**
  * Newsreader for headings gives the page an editorial, medical-publication
@@ -30,8 +31,8 @@ const inter = Inter({
 const deployedUrl = process.env.NEXT_PUBLIC_SITE_URL || site.website;
 const indexable = process.env.NEXT_PUBLIC_INDEXABLE === "true";
 
-const title = `${site.name} — ${site.strapline} | Anna Nagar East, Chennai`;
-const description = `Implants, root canals and full mouth rehabilitation with ${site.doctor.name}, ${site.doctor.credential}. In-house OPG, intraoral scanning, conscious sedation and a resident Endodontist — all at one clinic in Anna Nagar East, Chennai.`;
+const title = `${site.name} — Dental Implants & Full Mouth Rehabilitation | Anna Nagar East, Chennai`;
+const description = `Specialist implant and prosthodontic care with ${site.doctor.name}, ${site.doctor.credential}, at Pearl Dental Chennai. Full mouth implants, immediate loading, strategic implantology and complex rehabilitation — including cases with limited bone. Anna Nagar East, Chennai.`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(deployedUrl),
@@ -89,8 +90,9 @@ const schema = {
   url: deployedUrl,
   image: `${deployedUrl.replace(/\/$/, "")}/og.jpg`,
   logo: `${deployedUrl.replace(/\/$/, "")}/logo-pearl-dental.png`,
-  telephone: site.contact.phones.map((p) => `+91${p.replace(/^0/, "")}`),
+  telephone: site.contact.phones.map((p) => p.tel),
   email: site.contact.email,
+  foundingDate: site.established,
   address: {
     "@type": "PostalAddress",
     streetAddress: site.contact.address.street,
@@ -100,14 +102,14 @@ const schema = {
     addressCountry: site.contact.address.country,
   },
   openingHours: site.hours.schema,
-  priceRange: "₹₹",
   medicalSpecialty: "Dentistry",
   founder: {
     "@type": "Person",
     name: site.doctor.name,
     jobTitle: site.doctor.role,
   },
-  sameAs: [site.social.facebook, site.social.instagram, site.social.youtube],
+  sameAs: [site.social.facebook, site.social.instagram],
+  award: `${award.title} — ${award.body}`,
 };
 
 export default function RootLayout({
@@ -132,7 +134,10 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
       </head>
-      <body className="font-sans antialiased">{children}</body>
+      <body className="font-sans antialiased">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }

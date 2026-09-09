@@ -6,8 +6,8 @@ import { telHref, whatsappHref } from "@/lib/contact";
 
 const steps = [
   "We call you back to confirm a time — usually within clinic hours the same day.",
-  "Your first visit covers the examination and the in-house OPG scan.",
-  "You leave with a written treatment plan and a written estimate.",
+  "Your first visit covers the clinical examination and diagnostic evaluation.",
+  "You leave with a treatment plan and an estimate for it.",
 ];
 
 /**
@@ -53,7 +53,7 @@ export default function ThankYouPage() {
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <a href={telHref(phone)} className="btn btn-primary">
-              <Phone className="h-4 w-4" aria-hidden /> Call {phone}
+              <Phone className="h-4 w-4" aria-hidden /> Call {phone.display}
             </a>
             <a
               href={whatsappHref(

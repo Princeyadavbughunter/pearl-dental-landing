@@ -1,3 +1,4 @@
+import BookButton from "./lead/BookButton";
 import { implantSteps } from "@/config/site";
 
 /**
@@ -41,6 +42,13 @@ export default function JourneySection() {
             </li>
           ))}
         </ol>
+
+        <div className="mt-12 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+          <BookButton className="btn btn-primary">Start with step one</BookButton>
+          <p className="text-[14px] text-ink-mute">
+            The consultation is where the plan and the cost are decided.
+          </p>
+        </div>
       </div>
     </section>
   );

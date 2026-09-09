@@ -74,7 +74,7 @@ export default function PrivacyPage() {
             <h2 className="text-[18px] font-medium">Your choices</h2>
             <p className="muted mt-3">
               You can ask the clinic to delete your enquiry at any time by calling{" "}
-              {site.contact.phones[0]} or emailing{" "}
+              {site.contact.phones[0].display} or emailing{" "}
               <a
                 href={`mailto:${site.contact.email}`}
                 className="text-teal-700 underline underline-offset-2"

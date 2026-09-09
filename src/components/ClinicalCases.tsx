@@ -45,23 +45,21 @@ export default function ClinicalCases() {
           )}
         </div>
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-2 lg:gap-12">
+        <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
           {cases.map((c) => (
             <article key={c.id}>
               <div className="relative">
                 <div className="grid grid-cols-2 gap-px bg-line">
-                  {(
-                    [
-                      { src: c.before, label: "Before" },
-                      { src: c.after, label: "After" },
-                    ] as const
-                  ).map((shot) => (
+                  {[
+                    { src: c.before, label: c.beforeLabel },
+                    { src: c.after, label: c.afterLabel },
+                  ].map((shot) => (
                     <div key={shot.label} className="figure relative aspect-[4/3] bg-white">
                       <Image
                         src={shot.src}
                         alt={`${shot.label} — ${c.title}`}
                         fill
-                        sizes="(min-width: 1024px) 28vw, 50vw"
+                        sizes="(min-width: 1024px) 18vw, 44vw"
                         className={`object-cover transition-[filter] duration-500 ${
                           revealed ? "blur-0" : "blur-xl"
                         }`}
@@ -104,7 +102,7 @@ export default function ClinicalCases() {
             Ask what is possible in your case
           </BookButton>
           <p className="text-[14px] text-ink-mute">
-            What can be done is confirmed only after an examination and an OPG scan.
+            What is possible in your case is confirmed only after a clinical examination.
           </p>
         </div>
       </div>
