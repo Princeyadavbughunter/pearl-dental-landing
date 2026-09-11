@@ -5,14 +5,17 @@ type Slide = { key: string; src: string; label?: string; caption: string };
 
 /** Each pair becomes two full-width slides — a before and an after — so
  *  neither photo is squeezed into half a card and cropped. */
-const baseSlides: Slide[] = beforeAfterGallery.flatMap((item) =>
-  "composite" in item
-    ? [{ key: item.id, src: item.composite, caption: item.caption }]
-    : [
-        { key: `${item.id}-before`, src: item.before, label: "Before", caption: item.caption },
-        { key: `${item.id}-after`, src: item.after, label: "After", caption: item.caption },
-      ],
-);
+const baseSlides: Slide[] = [];
+for (const item of beforeAfterGallery) {
+  if ("composite" in item) {
+    baseSlides.push({ key: item.id, src: item.composite, caption: item.caption });
+  } else {
+    baseSlides.push(
+      { key: `${item.id}-before`, src: item.before, label: "Before", caption: item.caption },
+      { key: `${item.id}-after`, src: item.after, label: "After", caption: item.caption },
+    );
+  }
+}
 
 /**
  * A second set of before/after photographs, shown as one continuously
