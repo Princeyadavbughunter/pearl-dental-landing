@@ -230,6 +230,27 @@
   }
 }
 
+/* Continuously-scrolling row (before/after gallery). The track holds the
+   slide list twice back to back; translating by exactly -50% of its own
+   width loops seamlessly from the second copy back to the first. */
+@keyframes marquee-x {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  animation: marquee-x 32s linear infinite;
+}
+
+.marquee-track:hover,
+.marquee-track:focus-within {
+  animation-play-state: paused;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

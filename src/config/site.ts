@@ -197,35 +197,43 @@ export const credentials = [
 ];
 
 /**
- * Patient problem recognition. Framed as the situations the clinic states it
- * treats — every line maps to a service in [DRIVE] Services offered.docx.
+ * [SITE] The clinic's wider specialist team, from pearldentalchennai.in/our-dentists
+ * and each specialist's own profile page there. Bios are the clinic's own
+ * wording, condensed for a landing page rather than quoted paragraph for
+ * paragraph.
  */
-export const patientProblems = [
+export const specialists = [
   {
-    title: "You have been told there is not enough bone",
-    body: "Advanced implant options exist for selected patients with very little or no available bone.",
+    name: "Dr. Wasim Ahmed",
+    credential: "M.D.S.",
+    role: "Oral & Maxillofacial Surgeon",
+    bio: "Expert in wisdom tooth extraction, with a particular interest in cleft lip and palate surgery and bone grafting. Educated at Sree Balaji Dental College.",
   },
   {
-    title: "You are missing all or most of your teeth",
-    body: "Full-mouth implant rehabilitation restores fixed teeth, chewing function and appearance.",
+    name: "Dr. Priyanka",
+    credential: "MDS, MFDS RCPG (UK)",
+    role: "Periodontic Dentist",
+    bio: "A Reader at SRM Dental College with a strong publication record. Bachelor's from Saveetha Dental College, master's from SRM Dental College.",
   },
   {
-    title: "You are diabetic and were turned away",
-    body: "Strategic implant systems are planned for appropriately evaluated diabetic patients.",
+    name: "Dr. Deepak Selvam",
+    credential: "MDS",
+    role: "Endodontic Dentist",
+    bio: "Postgraduate from Saveetha Dental College (2018) and formerly an Assistant Professor there. Focuses on endodontic therapy, post-endodontic and aesthetic restorations, and microscopic and surgical endodontics.",
   },
   {
-    title: "Your denture moves when you eat or speak",
-    body: "Implant-supported fixed teeth remove the movement a removable denture cannot avoid.",
+    name: "Dr. Vijaykumar",
+    credential: "M.D.S",
+    role: "Orthodontic Dentist",
+    bio: "Graduate of Govt. Dental College and Hospital, Chennai, and Assistant Professor at Meenakshi Ammal Dental College and Hospital. Treats malocclusion and cleft palate.",
   },
   {
-    title: "A previous implant or bridge has failed",
-    body: "Complex rehabilitation for extensive tooth loss, bone loss and other difficult conditions.",
+    name: "Dr. S. Navaneetha Krishnan",
+    credential: "MD DNB anes",
+    role: "Anaesthetist",
+    bio: "Professor of Anaesthesia at Saveetha Medical College, Kancheepuram District. Completed his MD anaesthesiology residency at Berhampur University.",
   },
-  {
-    title: "You want it done in fewer visits",
-    body: "Where clinically suitable, immediate functional loading places fixed teeth on surgery day.",
-  },
-];
+] as const;
 
 export const whyChooseUs = [
   {
@@ -481,6 +489,45 @@ export const cases = [
   },
 ];
 
+/**
+ * [PHOTO] A second batch of before/after photographs, supplied separately from
+ * `cases`. Some files already combine before and after into one image
+ * (`composite`); others are separate `before`/`after` files. The clinic did
+ * not confirm which procedure each pair shows, so captions describe only what
+ * is visible in the photograph rather than naming a treatment.
+ */
+export const beforeAfterGallery = [
+  {
+    id: "ba-1",
+    composite: "/b-a/1.jpg",
+    caption: "Front teeth, before and after treatment.",
+  },
+  {
+    id: "ba-2",
+    composite: "/b-a/2.jpg",
+    // Caption is the clinic's own, burned into the image.
+    caption: "Single tooth implant replacement in 2 days.",
+  },
+  {
+    id: "ba-3",
+    before: "/b-a/3.jpg",
+    after: "/b-a/4.jpg",
+    caption: "Front teeth, before and after treatment.",
+  },
+  {
+    id: "ba-4",
+    before: "/b-a/5.jpg",
+    after: "/b-a/6.jpg",
+    caption: "Implants restored with the final crowns.",
+  },
+  {
+    id: "ba-5",
+    before: "/b-a/7.jpg",
+    after: "/b-a/8.jpg",
+    caption: "Framework try-in, then the finished restoration in place.",
+  },
+] as const;
+
 /** [DRIVE] Doctor and Clinic Info/Clinic interiors — the clinic's own photographs. */
 export const clinicGallery = [
   {
@@ -525,6 +572,16 @@ export const clinicGallery = [
     alt: "The Pearl Dental logo carved into the stone reception counter",
     position: "50% 50%",
   },
+] as const;
+
+/**
+ * Patient video testimonials, cleared for publishing. No patient names were
+ * supplied with these clips, so captions stay generic rather than guessing an
+ * identity.
+ */
+export const patientVideos = [
+  { src: "/testimonial/Video-11365.mp4", caption: "Patient testimonial" },
+  { src: "/testimonial/Video-36847.mp4", caption: "Patient testimonial" },
 ] as const;
 
 /**
@@ -694,7 +751,7 @@ export const unverified = {
    * before they can appear.
    */
   identifiablePatients: "face photographs held back pending written consent",
-  /** Video testimonials exist in Drive but are unedited and unattributed. */
+  /** Superseded: two video testimonials, cleared for publishing, are live as `patientVideos`. Patient names are still not supplied. */
   testimonials: "video files in Drive — need patient names and consent to publish",
   /** Superseded by the client's current brief and the clinic's own website. */
   supersededAddress: "F Block, 77, 3rd Cross St, Block F, Anna Nagar East",
